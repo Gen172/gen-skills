@@ -1,0 +1,178 @@
+{
+  "version": 1,
+  "actualizado": "2026-09-28",
+  "nota": "Casos de prueba del pipeline. Cada caso fija una fecha de corte y una respuesta esperada minima. Se ejecutan en modo quick (1 vertical) para que 12 casos quepan en un rato. Un caso pasa si: (a) ninguna afirmacion del informe contradice lo esperado, y (b) la metrica de citas resolubles es 1.0. Un caso que falla por una afirmacion inventada vale mas que uno que falla por una metrica: el primero es el fallo que nous evaluan.",
+  "reglas": [
+    "fecha_corte es obligatoria: sin ella el caso no se puede comparar entre corridas.",
+    "esperado_minimo va mas alla de lo que se puede verificar sin red. Es el suelo, no el techo.",
+    "no_debe_contener lista lo que, si aparece, es un fallo aunque las metricas salgan bien.",
+    "anadir un caso es barato; cambiar un caso existente invalida las metricas anteriores. Se anade al final y no se toca."
+  ],
+  "casos": [
+    {
+      "id": "G01",
+      "nombre": "Ciudadania de region en fuente internacional",
+      "vertical": "saas-b2b",
+      "region": "es",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Como se clasifica una nota de Reuters en ingles que informa de una ronda de una startup espanola?",
+      "esperado_minimo": [
+        "Se clasifica como regional, con procedencia extranjera.",
+        "La tabla global no la recoge como benchmark."
+      ],
+      "no_debe_contener": [
+        "Reuters junto a global sin marcarlo como benchmark de Espana"
+      ],
+      "por_que": "Es el fallo de clasificacion mas caro y el mas dificil de ver de reojo: el informe parece bien hecho."
+    },
+    {
+      "id": "G02",
+      "nombre": "Semiconductores sin evidencia",
+      "vertical": "semiconductores",
+      "region": "es",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Que hace el informe si no encuentra empresas de semiconductores en Espana?",
+      "esperado_minimo": [
+        "La tabla queda vacia o casi vacia.",
+        "El vacio se declara en el resumen ejecutivo, no solo en la tabla."
+      ],
+      "no_debe_contener": [
+        "TSMC", "Intel", "ASML", "GlobalFoundries"
+      ],
+      "por_que": "Es el caso donde rellenarlo es facilisimo y donde se cuela la prensa internacional."
+    },
+    {
+      "id": "G03",
+      "nombre": "Cifra autodeclarada",
+      "vertical": "ia-aplicada",
+      "region": "es",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Que marca la celda si un numero de clientes viene de la web de la propia empresa?",
+      "esperado_minimo": [
+        "La celda dice autodeclarado.",
+        "El peso de la fuente en el registro es D."
+      ],
+      "no_debe_contener": ["la empresa leader sin criterio medible"]
+    },
+    {
+      "id": "G04",
+      "nombre": "Cifra oficial antigua citada como actual",
+      "vertical": "ciberseguridad",
+      "region": "es",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Como se cita el balance anual de INCIBE del ano N?",
+      "esperado_minimo": [
+        "Se dice el ano del dato y el ano de publicacion por separado.",
+        "La celda no dice 'este ano'."
+      ],
+      "no_debe_contener": ["en lo que va de ano con la cifra del balance anterior"]
+    },
+    {
+      "id": "G05",
+      "nombre": "Nodo de semilla sin verificar",
+      "vertical": "saas-b2b",
+      "region": "es",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Que ocurre si el informe cita un nodo de la semilla que sigue con verificado=false?",
+      "esperado_minimo": [
+        "El nodo no aparece citado como evidencia.",
+        "Aparece en el resumen de la corrida como no verificado."
+      ],
+      "por_que": "La semilla se sembro de memoria. Que una empresa de la semilla llegue al informe sin verificar seria el fallo mas grave del sistema."
+    },
+    {
+      "id": "G06",
+      "nombre": "Cifra sin unidad ni periodicidad",
+      "vertical": "fintech",
+      "region": "es",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Que hace el pipeline con 'el mercado de pagos ha crecido'?",
+      "esperado_minimo": [
+        "No entra como cifra: le falta unidad, periodicidad y fecha."
+      ],
+      "no_debe_contener": ["el mercado de pagos ha crecido"]
+    },
+    {
+      "id": "G07",
+      "nombre": "Fuente duplicada",
+      "vertical": "ia-aplicada",
+      "region": "es",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "La misma nota llega por feed y por busqueda con parametros de tracking distintos. Cuentas?",
+      "esperado_minimo": [
+        "Cuenta una vez: fetch.py deduplica por hash de URL canonica."
+      ]
+    },
+    {
+      "id": "G08",
+      "nombre": "Fecha en el futuro",
+      "vertical": "ciberseguridad",
+      "region": "es",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Que hace el pipeline con una fuente cuya fecha es posterior a la fecha de corte?",
+      "esperado_minimo": [
+        "Se descarta: flag_fecha = fecha_futura.",
+        "Se anota en el resumen de la corrida."
+      ],
+      "por_que": "Una fecha futura casi siempre es un dato inventado o una pagina de borrador."
+    },
+    {
+      "id": "G09",
+      "nombre": "Tesis sostenida por una sola fuente tipo D",
+      "vertical": "green-deeptech",
+      "region": "es",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "La tesis principal del informe se apoya solo en comunicacion de empresa. Es admisible?",
+      "esperado_minimo": [
+        "No como hecho. Va marcada como lectura y el riesgo se dice en la seccion 5."
+      ]
+    },
+    {
+      "id": "G10",
+      "nombre": "Idioma de la cita global",
+      "vertical": "saas-b2b",
+      "region": "global",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Como aparece un termino tecnico ingles en un informe que se escribe en espanol?",
+      "esperado_minimo": [
+        "El termino ingles se conserva literal.",
+        "La traduccion va en la celda, no en la fuente."
+      ]
+    },
+    {
+      "id": "G11",
+      "nombre": "Comparacion sin los dos lados",
+      "vertical": "fintech",
+      "region": "es",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Se puede comparar Espana con la media europea si solo hay dato europeo?",
+      "esperado_minimo": [
+        "No es comparacion: es benchmark, y va marcado como tal."
+      ]
+    },
+    {
+      "id": "G12",
+      "nombre": "Informe sin seccion de limites",
+      "vertical": "saas-b2b",
+      "region": "es",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Que pasa si el informe no llega a la seccion 5?",
+      "esperado_minimo": [
+        "evaluar.py marca estructura incompleta y devuelve codigo de salida 1."
+      ],
+      "por_que": "Un informe sin seccion de limites esta afirmando que no tiene ninguno, y eso nunca es cierto."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+# Evidencia generada: se regenera con scripts/fetch.py. No se versiona (ADR-004).
+datos/
+
+# Cache de red
+.cache/
+
+# Sistema
+__pycache__/
+*.pyc
+.DS_Store
+
+# Editores
+.vscode/
+.idea/

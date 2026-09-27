@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "actualizado": "2026-09-28",
+  "region": {
+    "id": "es",
+    "nombre": "España",
+    "alcance": "regional",
+    "nota": "El benchmark global es el resto del mundo. Una fuente internacional que habla de un actor español sigue siendo regional, con procedencia extranjera. Ver REGIONAL.md."
+  },
+  "campos": [
+    {
+      "id": "empresas",
+      "nombre": "Empresas",
+      "pregunta": "Que empresas operan, que hacen y con que escala?",
+      "unidad": "razon social + sede + tamano"
+    },
+    {
+      "id": "financiacion",
+      "nombre": "Financiacion",
+      "pregunta": "Cuanto dinero entra, de quien y en que ronda?",
+      "unidad": "importe + ronda + inversor + fecha de la operacion"
+    },
+    {
+      "id": "talento",
+      "nombre": "Talento",
+      "pregunta": "Hay investigadores, ingenieros o perfiles scarcity?",
+      "unidad": "magnitud del agregado, con fuente oficial"
+    },
+    {
+      "id": "regulacion",
+      "nombre": "Regulacion",
+      "pregunta": "Que norma, ayuda o sancion afecta al sector?",
+      "unidad": "norma + organismo + fecha de vigencia"
+    }
+  ],
+  "verticales": [
+    {
+      "id": "ia-aplicada",
+      "nombre": "IA aplicada",
+      "descripcion": "Productos y servicios con modelos en produccion.",
+      "alias": ["inteligencia artificial", "AI", "LLM", "machine learning"],
+      "consultas_es": [
+        "inteligencia artificial Espana empresa",
+        "IA generativa Espana startup",
+        "modelo de lenguaje espanol empresa espanola"
+      ],
+      "consultas_global": [
+        "applied AI startup funding",
+        "enterprise LLM deployment 2026"
+      ],
+      "fuentes_oficiales": ["ine.es", "red.es"],
+      "sesgo_conocido": "Mucho marketing y pocas metricas auditadas. Exigir cifra con metodologia o descartar.",
+      "riesgo_espana": "bajo"
+    },
+    {
+      "id": "saas-b2b",
+      "nombre": "SaaS / B2B",
+      "descripcion": "Software como servicio vendido a empresas.",
+      "alias": ["SaaS", "B2B", "software", "enterprise software", "vertical SaaS"],
+      "consultas_es": [
+        "SaaS Espana empresa",
+        "software B2B Espana facturacion",
+        "startup espanola software empresas"
+      ],
+      "consultas_global": [
+        "B2B SaaS ARR growth 2026",
+        "vertical SaaS funding round"
+      ],
+      "fuentes_oficiales": ["ine.es", "epcentre.es"],
+      "sesgo_conocido": "Las cifras de ARR son autodeclaradas salvo auditoria. Marcar siempre autodeclarado.",
+      "riesgo_espana": "medio"
+    },
+    {
+      "id": "fintech",
+      "nombre": "Fintech",
+      "descripcion": "Servicios financieros y pagos digitales.",
+      "alias": ["fintech", "pagos", "pago digital", "banking", "open banking"],
+      "consultas_es": [
+        "fintech Espana regulacion",
+        "pago digital Espana Banco de Espana",
+        "banco digital Espana clientes"
+      ],
+      "consultas_global": [
+        "fintech funding round Europe",
+        "open banking API regulation EU"
+      ],
+      "fuentes_oficiales": ["bde.es", "cnmv.es", "consumo.gob.es"],
+      "sesgo_conocido": "Cifras de volumen de pagos muy citadas y mal explicadas. Exigir periodicidad y base de calculo.",
+      "riesgo_espana": "medio"
+    },
+    {
+      "id": "semiconductores",
+      "nombre": "Semiconductores",
+      "descripcion": "Diseno, fabricacion y empaquetado de chips.",
+      "alias": ["semiconductor", "chip", "fab", "foundry", "wafer", "RTL"],
+      "consultas_es": [
+        "semiconductores Espana",
+        "diseno de chips Espana empresa",
+        "fabricacion de chips Espana planta"
+      ],
+      "consultas_global": [
+        "semiconductor capex 2026",
+        "chip design startup Europe"
+      ],
+      "fuentes_oficiales": ["ine.es", "industria.gob.es"],
+      "sesgo_conocido": "El pipeline de noticias globales de chips es enorme y se cuela como regional si no se filtra.",
+      "riesgo_espana": "alto. Vertical estructuralmente delgada en Espana. Si no hay dato espanol, declarar vacio. No rellenar con global."
+    },
+    {
+      "id": "ciberseguridad",
+      "nombre": "Ciberseguridad",
+      "descripcion": "Defensa, deteccion y respuesta a incidentes.",
+      "alias": ["ciberseguridad", "cybersecurity", "INCIBE", "CCN-CERT", "ransomware"],
+      "consultas_es": [
+        "ciberseguridad Espana incidente",
+        "INCIBE informe Espana",
+        "ciberataque empresa espanola"
+      ],
+      "consultas_global": [
+        "ransomware campaign 2026",
+        "actively exploited vulnerability advisory"
+      ],
+      "fuentes_oficiales": ["incibe.es", "ccn-cert.cni.es", "interior.gob.es", "enisa.europa.eu"],
+      "sesgo_conocido": "Los informes oficiales se citan fuera de contexto. Citarlos con ano de publicacion, no como estado actual.",
+      "riesgo_espana": "bajo"
+    },
+    {
+      "id": "green-deeptech",
+      "nombre": "Green / Deeptech",
+      "descripcion": "Tecnologia climate y deeptech foundational.",
+      "alias": ["deeptech", "green tech", "climatech", "cuantica", "quantum", "baterias"],
+      "consultas_es": [
+        "deeptech Espana empresa",
+        "tecnologia cuantica Espana proyecto",
+        "startup espanola energia limpia"
+      ],
+      "consultas_global": [
+        "deeptech seed round Europe",
+        "fusion energy milestone 2026"
+      ],
+      "fuentes_oficiales": ["ciencia.gob.es", "csic.es"],
+      "sesgo_conocido": "Los hitos de investigacion se venden como producto comercial. Distinguir fase y estado real.",
+      "riesgo_espana": "bajo"
+    }
+  ],
+  "reglas_transversales": [
+    "Una fuente internacional que menciona un actor espanol cuenta como regional, no como global.",
+    "Si una vertical no tiene evidencia regional en la ventana, se declara vacia. No se rellena con global.",
+    "Toda cifra lleva unidad, periodicidad y fecha de publicacion. Sin las tres, no entra."
+  ]
+}

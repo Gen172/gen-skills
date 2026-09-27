@@ -1,0 +1,994 @@
+{
+  "version": 2,
+  "actualizado": "2026-09-28",
+  "aviso": "Verificacion completa ejecutada el 2026-09-28 sobre los 50 nodos de partida. Resultado: 42 verificados, 5 altas nuevas y 8 que no existen o tenian el nombre erroneo, retirados de la lista a 'verificacion.no_encontrados' con el motivo. Quedan 47 nodos, todos con URL comprobada, 'verificado_el' y 'metodo_verificacion'. En 'verificacion.candidatos_sin_url' hay 2 entidades documentadas (Andalucia Trade, SETT E.P.E.) que NO son usables como evidencia hasta que se compruebe su URL. Revalidar si la corrida es mas de 90 dias posterior. Ver 'verificacion' y REGIONAL.md.",
+  "reglas": [
+    "verificado=false significa 'no usar como evidencia'. No es una advertencia suave: es un veto.",
+    "Un nodo verificado aporta una URL verificable. La fecha de verificacion caduca: revalidar si la corrida es mas de 90 dias posterior.",
+    "vecindad son hipotesis de snowballing, tambien sin verificar. Sirven para generar consultas, no para citar.",
+    "Este archivo es configuracion, no datos. Se versiona porque de el depende que el agente no invente empresas."
+  ],
+  "nodos": {
+    "empresas": [
+      {
+        "nombre": "Telefonica Tech",
+        "verticales": [
+          "ia-aplicada",
+          "ciberseguridad"
+        ],
+        "sede": "Madrid",
+        "url": "https://telefonicatech.com/",
+        "que_hace": "Division tecnologica del grupo: IA, cloud, ciberseguridad.",
+        "vecindad": [
+          "proveedores de cloud",
+          "programas de accelerators"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "redireccion sin www"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Savana",
+        "verticales": [
+          "ia-aplicada"
+        ],
+        "sede": "Madrid",
+        "url": "https://savanamed.com/",
+        "que_hace": "IA aplicada al lenguaje clinico (cNLP) y evidencia de mundo real. Registros y redes federadas de datos clinicos.",
+        "vecindad": [
+          "hospitales"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "respondia 200; la sede estaba mal"
+          },
+          {
+            "sede": "CORREGIDO: la semilla decia Vigo. Fundada 2014 en Madrid; ~148 empleados; >5.000 M de documentos clinicos"
+          },
+          {
+            "nombre": "se llama Savana (MEDSAVANA, S.L.)"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Typeform",
+        "verticales": [
+          "saas-b2b"
+        ],
+        "sede": "Barcelona",
+        "url": "https://www.typeform.com/",
+        "que_hace": "SaaS de formularios y encuestas.",
+        "vecindad": [
+          "inversores",
+          "departamento de relaciones con inversores"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Idealista",
+        "verticales": [
+          "saas-b2b"
+        ],
+        "sede": "Madrid",
+        "url": "https://www.idealista.com/",
+        "que_hace": "Marketplace immobilier vertical (proptech).",
+        "vecindad": [
+          "portales inmobiliarios",
+          "agentes"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "sin HTTP 200: 403 de Fastly. El dominio resuelve y el CDN responde; requiere navegacion real."
+      },
+      {
+        "nombre": "Indra Sistemas",
+        "verticales": [
+          "saas-b2b",
+          "ciberseguridad"
+        ],
+        "sede": "Madrid",
+        "url": "https://www.indragroup.com/",
+        "que_hace": "TIC, defensa y transporte. 1S26: cartera 20.533 M EUR, EBIT +51% YoY.",
+        "vecindad": [
+          "contratos publicos",
+          "programas-European"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "indra.es da timeout desde esta red; el dominio de grupo responde 200 y publica resultados 1S2026"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 en el dominio correcto, confirmado con busqueda independiente"
+      },
+      {
+        "nombre": "Bizum",
+        "verticales": [
+          "fintech"
+        ],
+        "sede": "Madrid",
+        "url": "https://bizum.com/es/",
+        "que_hace": "Pago movil instantaneo promovido por el sector bancario espanol.",
+        "vecindad": [
+          "bancos participants",
+          "Banco de Espana",
+          "CNMV"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "redireccion de .es a .com"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Tink",
+        "verticales": [
+          "fintech"
+        ],
+        "sede": "Barcelona",
+        "url": "https://tink.com/",
+        "que_hace": "API de open banking.",
+        "vecindad": [
+          "bancos",
+          "regulacion PSD2"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Openbank",
+        "verticales": [
+          "fintech"
+        ],
+        "sede": "Madrid",
+        "url": "https://www.openbank.es/",
+        "que_hace": "Banco digital del grupo Santander.",
+        "vecindad": [
+          "Banco de Espana",
+          "CNMV"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "S2 Grupo",
+        "verticales": [
+          "ciberseguridad"
+        ],
+        "sede": "Zaragoza",
+        "url": "https://s2grupo.es/",
+        "que_hace": "Servicios de ciberseguridad e inteligencia.",
+        "vecindad": [
+          "INCIBE",
+          "CCN"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "redireccion sin www"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Multiverse Computing",
+        "verticales": [
+          "green-deeptech",
+          "ia-aplicada"
+        ],
+        "sede": "Madrid",
+        "url": "https://multiversecomputing.com/",
+        "que_hace": "Computacion cuantica y ML hibrido.",
+        "vecindad": [
+          "CERN",
+          "CSIC",
+          "programas publicos de I+D"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "redireccion sin www"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Inbrain Neuroelectronics",
+        "verticales": [
+          "green-deeptech"
+        ],
+        "sede": "Barcelona",
+        "url": "https://inbrain-neuroelectronics.com/",
+        "que_hace": "Interfaz cerebro-computadora para uso clinico.",
+        "vecindad": [
+          "hospitales",
+          "ICREA"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "redireccion sin www"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Grenergy",
+        "verticales": [
+          "green-deeptech"
+        ],
+        "sede": "Madrid",
+        "url": "https://grenergy.eu/",
+        "que_hace": "Plantas solares y almacenamiento. Cotiza desde 2015; ~3.500 M EUR de capitalizacion (jul 2026).",
+        "vecindad": [
+          "Renfe",
+          "CDTI"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "grenergy.es resuelve a parkingsrv0.dondominio.com: dominio aparcado. El vivo es .eu (200)"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Acciona Energia",
+        "verticales": [
+          "green-deeptech"
+        ],
+        "sede": "Madrid",
+        "url": "https://www.acciona-energia.com/",
+        "que_hace": "Eolica y solar.",
+        "vecindad": [
+          "CDTI",
+          "programas-European"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "el dominio sin guion no resuelve; con guion responde 200 y publica resultados 1S2026"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Sener",
+        "verticales": [
+          "green-deeptech"
+        ],
+        "sede": "Getxo (Vizcaya)",
+        "url": "https://www.group.sener/",
+        "que_hace": "Ingenieria aeroespacial, defensa, energia y movilidad. 2025: 933 M EUR de ingresos, +31,4% YoY.",
+        "vecindad": [
+          "programas de defensa",
+          "ICO"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "sener.es devuelve 403 de Cloudflare; el sitio del grupo responde 200"
+          },
+          {
+            "sede": "la sede del grupo esta en Getxo, no en Bilbao"
+          }
+        ],
+        "metodo_verificacion": "sener.es devuelve 403 de Cloudflare (subdominio aeroespacial); el sitio del grupo www.group.sener responde 200. Confirmado ademas con busqueda independiente."
+      },
+      {
+        "nombre": "Glovo",
+        "verticales": [
+          "saas-b2b"
+        ],
+        "sede": "Barcelona",
+        "url": "https://glovoapp.com/",
+        "que_hace": "Marketplace de reparto y delivery.",
+        "vecindad": [
+          "inversores",
+          "repartidores"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Cabify",
+        "verticales": [
+          "saas-b2b"
+        ],
+        "sede": "Madrid",
+        "url": "https://cabify.com/es",
+        "que_hace": "Movilidad y transporte de pasajeros.",
+        "vecindad": [
+          "inversores",
+          "operadores de transporte"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "redireccion"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      }
+    ],
+    "oficiales_y_reguladores": [
+      {
+        "nombre": "INCIBE",
+        "rol": "Instituto Nacional de Ciberseguridad",
+        "url": "https://www.incibe.es/",
+        "que_aporta": "Informes anuales de ciberseguridad en Espana.",
+        "verticales": [
+          "ciberseguridad"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "CCN / CCN-CERT",
+        "rol": "Centro de Respuesta a Incidentes CCN",
+        "url": "https://www.ccn-cert.cni.es/",
+        "que_aporta": "Alertas tecnicas y boletines.",
+        "verticales": [
+          "ciberseguridad"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "sin HTTP 200: 403 del edge CDN. Resuelve a un clúster de CDN activo."
+      },
+      {
+        "nombre": "CNMC",
+        "rol": "Comision Nacional de los Mercados y la Competencia",
+        "url": "https://www.cnmc.es/",
+        "que_aporta": "Regulacion y sanciones en telecomunicaciones y/audiovisual digital.",
+        "verticales": [
+          "saas-b2b",
+          "ciberseguridad"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Banco de Espana",
+        "rol": "Supervisor bancario y de medios de pago",
+        "url": "https://www.bde.es/wbe/es/",
+        "que_aporta": "Estadisticas de pagos y de inclusion financiera.",
+        "verticales": [
+          "fintech"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "redireccion a la via(web) de estadisticas"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "CNMV",
+        "rol": "Comision Nacional del Mercado de Valores",
+        "url": "https://www.cnmv.es/portal/home",
+        "que_aporta": "Fintechs cotizadas e informacion de mercados.",
+        "verticales": [
+          "fintech"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "redireccion"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "INE",
+        "rol": "Instituto Nacional de Estadistica",
+        "url": "https://www.ine.es/",
+        "que_aporta": "Series de actividad empresarial, I+D y digitalizacion.",
+        "verticales": [
+          "ia-aplicada",
+          "saas-b2b",
+          "semiconductores",
+          "green-deeptech"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Red.es",
+        "rol": "Entidad publica de digitalizacion",
+        "url": "https://www.red.es/es",
+        "que_aporta": "Datos de despliegue de banda ancha y de administracion rural.",
+        "verticales": [
+          "ia-aplicada"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "redireccion"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "AEPD",
+        "rol": "Agencia Espanola de Proteccion de Datos",
+        "url": "https://www.aepd.es/",
+        "que_aporta": "Sanciones y criterios sobre tratamiento de datos.",
+        "verticales": [
+          "ia-aplicada",
+          "fintech"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "CSIC",
+        "rol": "Consejo Superior de Investigaciones Cientificas",
+        "url": "https://www.csic.es/es",
+        "que_aporta": "Grupos de investigacion en deeptech.",
+        "verticales": [
+          "green-deeptech",
+          "semiconductores"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "redireccion"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "SETT E.P.E.",
+        "rol": "Sociedad Espanola para la Transformacion Tecnologica, entidad publica empresarial adscrita al Ministerio para la Transformacion Digital y de Funcion Publica",
+        "url": "https://sett.gob.es/",
+        "que_aporta": "Co-inversor publico en PERTE Chip, Next Tech y Spain Audiovisual. Adscrita al Ministerio. Creada por Real Decreto 676/2024 a partir de SEMyS. Sede: calle de Mármol 2, planta 7, 28005 Madrid. CIF Q2802877G.",
+        "verticales": [
+          "ia-aplicada",
+          "semiconductores"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "alta en 2026-09-28: estaba en 'candidatos_sin_url' desde la verificacion anterior. La URL existe y opera."
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 en sett.gob.es + BOE-A-2026-15565 (Resolución de 3 de julio de 2026, convenio SETT-PTA para semiconductores) + Real Decreto 676/2024 de 16 de julio de 2024. Advertencia: el NIF que figura en el directorio de Cinco Días (A10984342) no coincide con el de la disposición (Q2802877G); el del BOE es el fiable."
+      },
+      {
+        "nombre": "Andalucia Trade",
+        "rol": "Agencia Publica Empresarial para la Transformacion y el Desarrollo Economico, adscrita a la Consejeria de Universidad, Industria, Energia e Innovacion de la Junta de Andalucia",
+        "url": "https://www.andaluciatrade.es/",
+        "que_aporta": "Incentivos a la I+D+i: 88 M EUR previstos en 2026 (18 M no competitivo en septiembre + 70 M competitivo antes de fin de año). Prioriza microelectrónica, fotónica, computación avanzada y defensa.",
+        "verticales": [
+          "semiconductores",
+          "green-deeptech"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "alta en 2026-09-28: estaba en 'candidatos_sin_url' desde la verificacion anterior. Sustituye a Sernainnova, que no existe."
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 en andaluciatrade.es + nota oficial de la Junta de Andalucia de 23/07/2026 ('Andalucia TRADE lanzara 88 millones en ayudas destinadas a la I+D durante 2026', detalle/677059)"
+      },
+      {
+        "nombre": "ENISA",
+        "rol": "Agencia de la Union Europea para la ciberseguridad (sede Alicante)",
+        "url": "https://www.enisa.europa.eu/",
+        "que_aporta": "Informes de agencia UE con voz sobre Espana.",
+        "verticales": [
+          "ciberseguridad"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      }
+    ],
+    "medios": [
+      {
+        "nombre": "Genbeta",
+        "tipo": "tecnologia generalista",
+        "url": "https://www.genbeta.com/",
+        "nota": "Mucho volumen, poca verificacion. Usar como senal, nunca como unica fuente de una cifra.",
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Xataka",
+        "tipo": "tecnologia generalista",
+        "url": "https://www.xataka.com/",
+        "nota": "Igual que Genbeta: senal, no prueba.",
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Computer Hoy",
+        "tipo": "tecnologia generalista",
+        "url": "https://www.computerhoy.20minutos.es/",
+        "nota": "Senal, no prueba.",
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Expansion",
+        "tipo": "economia y mercados",
+        "url": "https://www.expansion.com/",
+        "nota": "Mejor para financiacion y datos de mercado. Citar la pieza original, no la nota de agencia.",
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Cinco Días",
+        "tipo": "economia y mercados",
+        "url": "https://cincodias.elpais.com/",
+        "nota": "Grupo Expansion.",
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "nombre": "corregido en la verificacion del 2026-09-28"
+          },
+          {
+            "url": "cinco-dias.elpais.com no resuelve; el sitio es cincodias.elpais.com"
+          },
+          {
+            "url": "cinco-dias.elpais.com no resuelve; el sitio es cincodias.elpais.com"
+          }
+        ],
+        "metodo_verificacion": "sin HTTP 200: 403 de Cloudflare. cincodias.elpais.com publica a diario; el dominio con guion que usaba la semilla ya no resuelve."
+      },
+      {
+        "nombre": "Reuters",
+        "tipo": "agencia internacional",
+        "url": "https://www.reuters.com/technology/",
+        "nota": "Clave: si una nota de Reuters trata sobre un actor espanol, es regional con procedencia extranjera. Ver REGIONAL.md.",
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "sin HTTP 200: 401 de Reuters (paywall/bloqueo de bot). Reuters opera; la nota sobre actores espanoles sigue siendo regional con procedencia extranjera (REGIONAL.md)."
+      },
+      {
+        "nombre": "TechCrunch",
+        "tipo": "agencia internacional",
+        "url": "https://techcrunch.com/",
+        "nota": "Cobertura de startups. Fuente tipica de rondas de financiacion.",
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      }
+    ],
+    "aceleradoras_e_inversores": [
+      {
+        "nombre": "Y Combinator",
+        "url": "https://www.ycombinator.com/",
+        "que_hace": "Acelera startups y mantiene programas con sede en Espana.",
+        "vecindad": [
+          "startups de sus programas",
+          "mentores"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "EIT Digital",
+        "url": "https://eitdigital.eu/",
+        "que_hace": "Red europea de innovacion digital con nodo en Espana.",
+        "vecindad": [
+          "scaleups europeas",
+          "programas de aceleracion"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Suma Capital",
+        "url": "https://sumacapital.com/",
+        "que_hace": "Inversor de deeptech temprano.",
+        "vecindad": [
+          "portfolios",
+          "universidades"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "redireccion sin www"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Inveread",
+        "url": "https://www.inveread.com/",
+        "que_hace": "Capital riesgo con foco en deeptech y salud.",
+        "vecindad": [
+          "portfolios",
+          "coinvestidores"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "Wayflyer",
+        "url": "https://wayflyer.com/es",
+        "que_hace": "Creditaje para software. Respaldo tecnologico precisamente a empresas SaaS espanolas.",
+        "vecindad": [
+          "portfolios de software",
+          "informes de creditabilidad"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "redireccion"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      }
+    ],
+    "centros": [
+      {
+        "nombre": "Barcelona Supercomputing Center (BSC)",
+        "url": "https://www.bsc.es/",
+        "que_hace": "Computacion de alto rendimiento e investigacion en IA.",
+        "verticales": [
+          "ia-aplicada",
+          "green-deeptech"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "ICREA",
+        "url": "https://www.icrea.cat/",
+        "que_hace": "Catalan Institution for Research and Advanced Studies.",
+        "verticales": [
+          "green-deeptech"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "CERN",
+        "url": "https://home.cern/",
+        "que_hace": "Laboratorio europeo. Espana es miembro: es nodo vecino de deeptech, no nodo regional.",
+        "verticales": [
+          "green-deeptech",
+          "semiconductores"
+        ],
+        "nota": "Caso limite de la frontera regional/global. Tratar como global.",
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "CSIC",
+        "url": "https://www.csic.es/es",
+        "que_hace": "Consejo Superior de Investigaciones Cientificas: grupos de deeptech.",
+        "verticales": [
+          "green-deeptech",
+          "semiconductores"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "correcciones": [
+          {
+            "url": "redireccion"
+          }
+        ],
+        "metodo_verificacion": "HTTP 200 directo"
+      },
+      {
+        "nombre": "ICFO",
+        "verticales": [
+          "semiconductores",
+          "green-deeptech"
+        ],
+        "sede": "Castelldefels (Barcelona)",
+        "url": "https://www.icfo.eu/",
+        "que_hace": "Instituto de Ciencias Fotonicas. Coordina PIXEurope, la primera linea piloto (\"pilot line\") integrada de circuitos fotonicos de Europa: 400 M EUR del Chips Joint Undertaking.",
+        "vecindad": [
+          "IMB-CNM",
+          "imec",
+          "consorcio Chips JU",
+          "Generalitat: Plan Catalonia en Accion"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 + busqueda que confirma el rol de coordinador y la cifra de 400 M EUR"
+      },
+      {
+        "nombre": "IMB-CNM-CSIC",
+        "verticales": [
+          "semiconductores",
+          "green-deeptech"
+        ],
+        "sede": "Barcelona",
+        "url": "https://www.imb-cnm.csic.es/",
+        "que_hace": "Instituto de Microelectronica de Barcelona. Partner de PIXEurope: desarrolla nitruro de silicio para fotonica visible y NIR y coordina las actividades SiN de la linea piloto.",
+        "vecindad": [
+          "ICFO",
+          "CSIC",
+          "PIXEurope"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 + nota oficial del instituto sobre PIXEurope"
+      },
+      {
+        "nombre": "EIT Digital",
+        "verticales": [
+          "ia-aplicada",
+          "saas-b2b"
+        ],
+        "sede": "Barcelona (sede cofinanciada)",
+        "url": "https://eitdigital.eu/",
+        "que_hace": "Red europea de innovacion digital con nodo en Espana.",
+        "vecindad": [
+          "scaleups europeas",
+          "programas de aceleracion"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200, pero con redireccion a 28digital.eu: revisar antes de citar"
+      },
+      {
+        "nombre": "Easo Ventures",
+        "verticales": [
+          "ia-aplicada",
+          "green-deeptech"
+        ],
+        "sede": "San Sebastian",
+        "url": "https://easoventures.com/",
+        "que_hace": "Micro VC (&lt;1 M EUR) en el Pais Vasco, mult-sector. Cofinancio con Itzarri EPSV.",
+        "vecindad": [
+          "Itzarri EPSV",
+          "portafolio de ciberseguridad y salud"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 + operacion documentada con Itzarri EPSV"
+      },
+      {
+        "nombre": "Accio",
+        "verticales": [
+          "ia-aplicada",
+          "saas-b2b",
+          "fintech",
+          "green-deeptech"
+        ],
+        "sede": "Barcelona",
+        "url": "https://www.accio.gencat.cat/",
+        "que_haca": "Agencia Catalonia para la internacionalizacion. Publica informes por sector: el informe \"La salut digital a Catalunya\" (2026) da 419 empresas, 652 M EUR de facturacion y 5.326 empleados. Es la fuente primaria mas Rico para cifras de sector en Catalunya.",
+        "vecindad": [
+          "Barcelona Health Hub",
+          "Barcelona & Partners",
+          "informes por sector"
+        ],
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 + informe citado por Expansion (mayo 2026)"
+      }
+    ]
+  },
+  "huecos_conocidos": [
+    {
+      "vertical": "semiconductores",
+      "problema": "No hay fabricacion de chips a escala en Espana. El nodo publico mas cercano sigue siendo la FOTONICA, no el silicio: ICFO coordina PIXEurope y el IMB-CNM-CSIC desarrolla SiN en la misma linea piloto.",
+      "cambio": "El hueco ya no es 'no hay nada': hay dos centros de referencia y una linea piloto de 400 M EUR. Lo que sigue faltando es la fabricacion. Ademas hay senales nuevas que no estaban en la semilla original: OQC levanta 92 M EUR en Barcelona, y SETT y Malaga TechPark han firmado convenio de semiconductores (jul 2026).",
+      "regla": "Declarar la vertical como sin fabricacion y con solo fotonica. El informe puede citar el ecosistema de investigacion y los programas Boundary, pero tiene que decir explicitamente que no hay produccion. No rellenarla con noticias globales de chips.",
+      "prioridad": "alta: la vertical tiene contenido institucional real y no esta vacia. Verificar SETT y Andalucia Trade antes de citarlos."
+    },
+    {
+      "vertical": "talento",
+      "problema": "Las fuentes habituales de talento (LinkedIn Recruiter, encuestas de recruiters) son de pago o poco reproducibles.Nota de la verificacion: el informe sectorial de Accio sobre salud digital en Catalunya (419 empresas, 652 M EUR) muestra que hay estadisticas publicas de sector que no son de pago. Revisar si hay equivalente para otras verticales antes de asumir que el hueco es de datos.",
+      "regla": "Preferir series del INE. Si se usa una fuente de pago, marcarla como tal y no compararla con otras.",
+      "prioridad": "media"
+    }
+  ],
+  "verificacion": {
+    "fecha": "2026-09-28",
+    "metodo": "curl con User-Agent de navegador siguiendo redirecciones, en paralelo, sobre las 46 URLs con dominio; para las que fallaron, getent hosts para separar 'DNS no existe' de 'bot bloqueado'; y busqueda web independiente para el contenido. Control: un dominio inexistente dio el mismo error DNS que los fallos, y un dominio conocido (ine.es) respondio 200, para descartar que el fallo fuera de la red.",
+    "hallazgo_principal": "De los 9 dominios que no resuelven, 5 eran erratas de la semilla (dominios reales distintos) y 4 eran empresas que no existen. El fallo de fondo no era la red: era el nombre. Ver 'correcciones' en cada nodo.",
+    "distincion_importante": "Un 403 o 401 de CDN (Idealista, Sener, CCN-CERT, Reuters) NO es una empresa muerta: es un bot bloqueado. Solo los dominios sin registro DNS o aparcados se consideran caidos.",
+    "no_encontrados": [
+      {
+        "nombre": "Signifyda",
+        "verticales": [
+          "ia-aplicada"
+        ],
+        "sede": "Barcelona",
+        "url": null,
+        "que_hace": "IA para diagnostico medico.",
+        "vecindad": [
+          "hospitales",
+          "reguladores sanitarios"
+        ],
+        "verificado": false,
+        "verificado_el": null,
+        "motivo_no_encontrado": "IA para diagnostico medico (Barcelona). No aparece con ese nombre ni con esa actividad. El cluster existe y es grande (419 empresas, 652 M EUR en Catalunya segun Accio 2026) y hay companies reales (Atrys, Tensor Medical, xAID, Mediktor, Vitalera), pero ninguna llamada Signifyda. seed: memoria, sin URL."
+      },
+      {
+        "nombre": "Aura",
+        "verticales": [
+          "ia-aplicada"
+        ],
+        "sede": "A Coruna",
+        "url": null,
+        "que_hace": "IA conversacional para atencion al cliente.",
+        "vecindad": [
+          "contact centers"
+        ],
+        "verificado": false,
+        "verificado_el": null,
+        "motivo_no_encontrado": "IA conversacional para atencion al cliente (A Coruna). No aparece con esa sede ni esa actividad. Si existen many 'Aura' por el mundo. Sospecha: confusion con Aura de Telefonica (aura.telefonica.com), que si es conversacional y es espanola. seed: memoria, sin URL."
+      },
+      {
+        "nombre": "Bizzon",
+        "verticales": [
+          "saas-b2b"
+        ],
+        "sede": "Barcelona",
+        "url": null,
+        "que_hace": "Plataforma de gestion de servicios profesionales.",
+        "vecindad": [
+          "marketplaces de servicios"
+        ],
+        "verificado": false,
+        "verificado_el": null,
+        "motivo_no_encontrado": "Plataforma de gestion de servicios profesionales (Barcelona). No aparece con esa actividad. Si existe thebizzon.com, pero es una plataforma de descubrimiento de startups para inversores de Europa del Este, no un SaaS de Barcelona. seed: memoria, sin URL."
+      },
+      {
+        "nombre": "Qustain",
+        "verticales": [
+          "green-deeptech"
+        ],
+        "sede": "Barcelona",
+        "url": "https://www.qustain.com/",
+        "que_hace": "Materiales superconductores.",
+        "vecindad": [
+          "ICREA",
+          "universidades"
+        ],
+        "verificado": false,
+        "verificado_el": null,
+        "motivo_no_encontrado": "Materiales superconductores (Barcelona). Busqueda sin resultados propios: no aparece ficha, web ni noticias. Vecinos reales cerca: IFAE, ICMAB-CSIC. No se ha podido distinguir si fue cerrada o nunca existio. Origen: memoria, dominio inexistente."
+      },
+      {
+        "nombre": "Phynex",
+        "verticales": [
+          "green-deeptech"
+        ],
+        "sede": "Barcelona",
+        "url": "https://www.phynexenergy.com/",
+        "que_hace": "Baterias de estado solido.",
+        "vecindad": [
+          "I+D industrial",
+          "programas de investigacion publica"
+        ],
+        "verificado": false,
+        "verificado_el": null,
+        "motivo_no_encontrado": "Baterias de estado solido (Barcelona). Sin resultados propios. Con nombres parecidos: pHYnix (hidrogeno verde, Madrid), Phinergy (metal-air, Israel), Voltpile (estado solido, Barcelona). Sospecha: corrupcion de nombre. seed: memoria, dominio inexistente."
+      },
+      {
+        "nombre": "Sernainnova",
+        "rol": "Agencia de transferencia tecnologica de Andalucia",
+        "url": "https://www.sernainnova.es/",
+        "que_aporta": "Proyectos tecnologicos y transferencia de tecnologia.",
+        "verticales": [
+          "green-deeptech",
+          "semiconductores"
+        ],
+        "verificado": false,
+        "verificado_el": null,
+        "motivo_no_encontrado": "Agencia de transferencia tecnologica de Andalucia. No aparece. La entidad que ocupa ese papel hoy es Andalucia Trade (Consejeria de Universidad, Industria, Energia e Innovacion), con 88 M EUR de incentivos I+D en 2026. URL no verificada: ver candidatos_sin_url."
+      },
+      {
+        "nombre": "ITAIN Capital",
+        "url": "https://www.itain.com/",
+        "que_hace": "Capital riesgo temprano en el Pais Vasco.",
+        "vecindad": [
+          "portfolios",
+          "programas publicos del Pais Vasco"
+        ],
+        "verificado": false,
+        "verificado_el": null,
+        "motivo_no_encontrado": "Capital riesgo temprano en el Pais Vasco. No aparece. El fondo vasco real en fase temprana es Easo Ventures (San Sebastian). ITAIN fue un organismo publico de innovacion, no una gestora. seed: memoria, dominio inexistente."
+      },
+      {
+        "nombre": "PIC Barcelona",
+        "url": "https://www.picbarcelona.com/",
+        "que_hace": "Fotonica y microfabricacion. El nodo mas cercano a los semiconductores en Espana.",
+        "verticales": [
+          "semiconductores",
+          "green-deeptech"
+        ],
+        "verificado": false,
+        "verificado_el": null,
+        "motivo_no_encontrado": "Instituto fotonico. No existe con ese nombre. Los nodos reales de fotonica en Barcelona son ICFO (coordinador de PIXEurope) e IMB-CNM-CSIC (partner). Sospecha: 'PIC' leido como sigla de 'photonic integrated circuits' y convertido en nombre de instituto. seed: memoria, dominio inexistente."
+      }
+    ],
+    "candidatos_sin_url": [
+      {
+        "nombre": "Alcyon Photonics",
+        "rol": "Diseno y fabricacion de circuitos fotonicos integrados (PIC)",
+        "que_aporta": "Madrid. Seed declarada el 2025-02-18; 5,7 M USD levantados en total. Seria el nodo empresarial mas cercano a la fabricacion dentro de la vertical de semiconductores.",
+        "evidencia": "Ficha de tercero en la ronda 1 del 2026-09-28. La URL (alcyonphotonics.com) NO se ha abierto: sigue siendo candidata sin verificar.",
+        "url": null,
+        "verificado": false,
+        "verificado_el": null
+      },
+      {
+        "nombre": "Arq Quantum",
+        "rol": "Criptografia post-cuantica (acuerdo de clave simetrico resistente a cuantico)",
+        "que_aporta": "Barcelona. Seed de 1,4 M USD declarada el 2026-07-16. Conecta green-deeptech con ciberseguridad.",
+        "evidencia": "Ficha de tercero en la ronda 1 del 2026-09-28. La URL (arqtech.eu) NO se ha abierto: sigue siendo candidata sin verificar.",
+        "url": null,
+        "verificado": false,
+        "verificado_el": null
+      },
+      {
+        "nombre": "Orbio AI",
+        "rol": "IA agéntica para la gestión de recursos humanos",
+        "que_aporta": "Madrid. Serie A de 18 M EUR (21 M USD) cerrada el 2026-06-15, segun la empresa: 28 M USD (24 M EUR) en total en un ano, 20+ profesionales, 20+ paises.",
+        "evidencia": "Europa Press, 15/06/2026. La web de la empresa NO se ha abierto y el texto descargado de Europa Press volvio solo con navegacion: candidata sin verificar.",
+        "url": null,
+        "verificado": false,
+        "verificado_el": null
+      },
+      {
+        "nombre": "Quantix",
+        "rol": "Centro de chips ciberseguros (Murcia)",
+        "que_aporta": "Si se confirma, es la senal mas directa de que la vertical de semiconductores deja de ser solo fotonica: un centro de fabricacion anunciado en Murcia.",
+        "evidencia": "Titular del listado de noticias de sett.gob.es visto en la ronda 1 del 2026-09-28. NO se ha podido confirmar en el texto descargado de la web de SETT ni abrir la fuente original. No citar hasta verificar.",
+        "url": null,
+        "verificado": false,
+        "verificado_el": null
+      }
+    ],
+    "nota_candidatos": "Andalucia Trade y SETT E.P.E. estaban aqui en la verificacion del 2026-09-28 y se han promovido a nodos verificados tras abrir su URL en la corrida c1-2026-09-28. Los cuatro candidatos que quedan NO se han verificado: su URL sigue a null y no pueden usarse como evidencia, solo para generar consultas."
+  }
+}

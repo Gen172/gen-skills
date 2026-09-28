@@ -408,8 +408,13 @@ def main() -> int:
     if urls_muertas:
         print(f"\n  URLs que no resuelven ({len(urls_muertas)}): {urls_muertas[:8]}")
 
-    if args.golden and args.golden.exists():
-        golden = json.loads(args.golden.read_text(encoding="utf-8"))
+    # `--caso` se puede pedir sin `--golden`: es el comando corto que aparece en
+    # la ayuda. Antes esta rama cuelga de `if args.golden`, con lo que un
+    # `--caso` a secas se ejecutaba, no imprimia nada y salia con 0: el caso
+    # parecia comprobado y no lo estaba.
+    golden_path = args.golden or (args.caso and RAIZ / "golden" / "casos.json")
+    if golden_path and Path(golden_path).exists():
+        golden = json.loads(Path(golden_path).read_text(encoding="utf-8"))
         casos = golden.get("casos", [])
         # El caso del golden lleva `vertical` en el dominio sectorial y `familia`
         # en el laboral. El informe declara `verticales` o `familias`.
@@ -443,7 +448,7 @@ def main() -> int:
         else:
             print(f"\n  Golden: {len(casos)} casos definidos")
             for c in casos:
-                ambito = c.get(campo_caso) or c.get("vertical") or ""
+                ambito = c.get(campo_caso) or c.get("familia") or c.get("vertical") or ""
                 encaja = " *" if ambito and ambito in declarados else "  "
                 print(f"   {encaja} {c['id']}  {ambito:<18} {c['nombre']}")
             print("    (* = vertical o familia de este informe.  "

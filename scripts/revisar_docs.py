@@ -21,6 +21,11 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 EXT = {".md", ".json", ".py"}
+# Carpetas que no son nuestras. `node_modules` entra con thousands de ficheros
+# de terceros y sus caracteres rarefiedos hunden el ratio de ruido: cuando el
+# linter_findaba 297 problemas, 297 eran de ahi y el linter era inutil.
+IGNORAR = {".git", "node_modules", "__pycache__", ".venv", "venv",
+           ".cache", "cache", "datos", "dist", "build", ".opencode/state"}
 
 # Alfabetos que no pertenecen a ningun fichero de este proyecto.
 EXTRANOS = re.compile(
@@ -116,16 +121,26 @@ def revisar_fichero(p: Path) -> list[str]:
     return problemas
 
 
+def es_nuestro(p: Path) -> bool:
+    """True si el fichero es del repo y no de una dependencia instalada."""
+    try:
+        partes = p.relative_to(RAIZ).parts
+    except ValueError:
+        return False
+    return not any(x in IGNORAR for x in partes[:-1])
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--fix", action="store_true")
     ap.add_argument("rutas", nargs="*", default=None)
     args = ap.parse_args()
 
-    objetivos = [Path(r).resolve() for r in args.rutas] if args.rutas else [
-        p for p in RAIZ.rglob("*")
-        if p.suffix in EXT and ".git" not in p.parts and "cache" not in p.parts
-    ]
+    if args.rutas:
+        objetivos = [Path(r).resolve() for r in args.rutas]
+    else:
+        objetivos = [p for p in RAIZ.rglob("*")
+                     if p.suffix in EXT and es_nuestro(p)]
 
     total = 0
     for p in sorted(objetivos):

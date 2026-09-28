@@ -1,7 +1,7 @@
 {
   "version": 1,
   "actualizado": "2026-09-28",
-  "nota": "Casos de prueba del pipeline. Cada caso fija una fecha de corte y una respuesta esperada minima. Se ejecutan en modo quick (1 vertical) para que 12 casos quepan en un rato. Un caso pasa si: (a) ninguna afirmacion del informe contradice lo esperado, y (b) la metrica de citas resolubles es 1.0. Un caso que falla por una afirmacion inventada vale mas que uno que falla por una metrica: el primero es el fallo que nous evaluan.",
+  "nota": "Casos de prueba del pipeline. Cada caso fija una fecha de corte y una respuesta esperada minima. Se ejecutan en modo quick (1 vertical o 1 familia) para que 18 casos quepan en un rato. Un caso pasa si: (a) ninguna afirmacion del informe contradice lo esperado, y (b) la metrica de citas resolubles es 1.0. Los casos G01-G12 son del dominio sector y se localizan por 'vertical'; los G13-G18 son del dominio laboral y se localizan por 'familia'. Un caso que falla por una afirmacion inventada vale mas que uno que falla por una metrica: el primero es el fallo que no nos evaluan.",
   "reglas": [
     "fecha_corte es obligatoria: sin ella el caso no se puede comparar entre corridas.",
     "esperado_minimo va mas alla de lo que se puede verificar sin red. Es el suelo, no el techo.",
@@ -39,7 +39,10 @@
         "El vacio se declara en el resumen ejecutivo, no solo en la tabla."
       ],
       "no_debe_contener": [
-        "TSMC", "Intel", "ASML", "GlobalFoundries"
+        "TSMC",
+        "Intel",
+        "ASML",
+        "GlobalFoundries"
       ],
       "por_que": "Es el caso donde rellenarlo es facilisimo y donde se cuela la prensa internacional."
     },
@@ -55,7 +58,9 @@
         "La celda dice autodeclarado.",
         "El peso de la fuente en el registro es D."
       ],
-      "no_debe_contener": ["la empresa leader sin criterio medible"]
+      "no_debe_contener": [
+        "la empresa leader sin criterio medible"
+      ]
     },
     {
       "id": "G04",
@@ -69,7 +74,9 @@
         "Se dice el ano del dato y el ano de publicacion por separado.",
         "La celda no dice 'este ano'."
       ],
-      "no_debe_contener": ["en lo que va de ano con la cifra del balance anterior"]
+      "no_debe_contener": [
+        "en lo que va de ano con la cifra del balance anterior"
+      ]
     },
     {
       "id": "G05",
@@ -96,7 +103,9 @@
       "esperado_minimo": [
         "No entra como cifra: le falta unidad, periodicidad y fecha."
       ],
-      "no_debe_contener": ["el mercado de pagos ha crecido"]
+      "no_debe_contener": [
+        "el mercado de pagos ha crecido"
+      ]
     },
     {
       "id": "G07",
@@ -173,6 +182,105 @@
         "evaluar.py marca estructura incompleta y devuelve codigo de salida 1."
       ],
       "por_que": "Un informe sin seccion de limites esta afirmando que no tiene ninguno, y eso nunca es cierto."
+    },
+    {
+      "id": "G13",
+      "nombre": "Rango de salario sin n ni muestra",
+      "dominio": "laboral",
+      "familia": "dam",
+      "region": "galicia",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Que pasa si la celda de salario dice 'los salarios van de 30.000 a 45.000 EUR' sin decir cuantas ofertas hay detras?",
+      "esperado_minimo": [
+        "evaluar.py marca la celda con 'sin n= (muestra)' y devuelve codigo de salida 1.",
+        "El informe no publica una media, solo el rango observado."
+      ],
+      "por_que": "Un rango sin n lee como un mercado y es el resultado de dos ofertas. Es el fallo que mas se cuela porque la cifra es cierta."
+    },
+    {
+      "id": "G14",
+      "nombre": "Media de salario con muestra insuficiente",
+      "dominio": "laboral",
+      "familia": "dam",
+      "region": "galicia",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Que pasa si hay 4 ofertas con salario y el informe publica 'el salario medio es 34.500 EUR' sin advertir que n=4?",
+      "esperado_minimo": [
+        "El informe declara que la muestra no alcanza para media y da el rango, no la media.",
+        "El evaluador marca la celda de salario por el motivo de muestra."
+      ],
+      "no_debe_contener": [
+        "salario medio",
+        "salario promedio"
+      ],
+      "por_que": "La media de 4 ofertas parece un dato de mercado y es una division por cuatro. Las medias sin n esconden el intervalo."
+    },
+    {
+      "id": "G15",
+      "nombre": "Salario citado a un panel que no publica salario",
+      "dominio": "laboral",
+      "familia": "asir",
+      "region": "galicia",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Que pasa si la celda de salario cita un panel de ofertas cuya ficha no muestra el salario, pero el enlace existe en la evidencia?",
+      "esperado_minimo": [
+        "evaluar.py marca 'ninguna de las fuentes citadas publica un salario' y devuelve 1.",
+        "El informe dice que las ofertas no publican salario, en vez de estimarlo."
+      ],
+      "por_que": "El enlace resuelve y la cifra no esta. Es el fallo que la cita resoluble deja pasar, por eso tiene su propio caso."
+    },
+    {
+      "id": "G16",
+      "nombre": "Brecha de habilidades sin una familia",
+      "dominio": "laboral",
+      "familia": "asir",
+      "region": "galicia",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Que pasa si el informe declara las familias dam y asir y la tabla de brecha solo trae la subseccion de dam?",
+      "esperado_minimo": [
+        "brecha_declarada baja y el evaluador nombra la familia que falta.",
+        "Devuelve codigo de salida 1 aunque todas las citas resuelvan."
+      ],
+      "por_que": "La familia sin datos es justo la que el lector quiere ver. Si desaparece de la brecha, el informe parece completo y no lo es."
+    },
+    {
+      "id": "G17",
+      "nombre": "Familia sin ofertas rellenada con la otra",
+      "dominio": "laboral",
+      "familia": "asir",
+      "region": "galicia",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Que pasa si no hay ninguna oferta de asir y el informe le atribuye las ofertas de dam?",
+      "esperado_minimo": [
+        "La subseccion de asir dice que no hay ofertas y declara el vacio en el resumen.",
+        "Ninguna cifra de asir se apoya en una oferta de dam."
+      ],
+      "no_debe_contener": [
+        "asir: 2 ofertas",
+        "asir: 2 vacantes",
+        "mismo mercado que dam"
+      ],
+      "por_que": "Las dos familias comparten casi todo el vocabulario, asi que el cruce de ofertas no se ve. Es el modo mas facil de que un informe de dos familias sea en realidad de una."
+    },
+    {
+      "id": "G18",
+      "nombre": "Clave local convertida en URL inventada",
+      "dominio": "laboral",
+      "familia": "dam",
+      "region": "galicia",
+      "modo": "quick",
+      "fecha_corte": "2026-09-28",
+      "pregunta": "Que pasa si el informe cita el CSV como https://www.portalemplego.gal/...?",
+      "esperado_minimo": [
+        "citas_resolubles baja porque la URL no esta en la evidencia.",
+        "El informe cita la clave literal archivo:<fichero>#<fila>."
+      ],
+      "por_que": "Un CSV entregado no tiene URL. Inventarsela hace que la cita parezca verificable por alguien que no vaya a mirar el fichero."
     }
   ]
 }

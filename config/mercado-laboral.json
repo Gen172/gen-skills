@@ -1,0 +1,537 @@
+{
+  "version": 1,
+  "actualizado": "2026-09-28",
+  "dominio": "laboral",
+  "descripcion": "Demanda de empleo tecnologico por familia formativa (DAM, ASIR) y senales de horizonte a 2-3 anos. Es el segundo dominio del pipeline: el primero (config/verticales.json) describe el sector; este describe el mercado laboral. Misma frontera dura, otro objeto de estudio.",
+  "reglas_de_dominio": [
+    "Se escribe `dominio: laboral` en el frontmatter del informe. Sin ese campo, evaluar.py exige las secciones del dominio sectorial.",
+    "La unidad de analisis es la familia (dam, asir), no la empresa. Una oferta cuenta una vez, con su URL propia.",
+    "Regiones: galicia, espana, global. Una oferta de fuera de la region no rellena la celda regional: va en benchmarks, marcada como tal.",
+    "El salary de una oferta es el que publica la oferta. No se anualiza, no se pasa a neto y no se extrapola sin decirlo en la misma celda."
+  ],
+  "regiones": [
+    {
+      "id": "galicia",
+      "nombre": "Galicia",
+      "alcance": "regional",
+      "nota": "Ambito de referencia de la practica DAM/ASIR. Un dato de Espana sin desglose autonómico no es un dato de Galicia: va como benchmark de Espana."
+    },
+    {
+      "id": "espana",
+      "nombre": "España",
+      "alcance": "nacional",
+      "nota": "Incluye Galicia como parte, nunca al revés. Ver REGIONAL.md para el mismo criterio aplicado a sectores."
+    },
+    {
+      "id": "global",
+      "nombre": "Global",
+      "alcance": "internacional",
+      "nota": "Solo para senales de horizonte. Un dato global no rellena una celda de demanda actual."
+    }
+  ],
+  "campos": [
+    {
+      "id": "vacantes",
+      "nombre": "Vacantes",
+      "pregunta": "Cuantas ofertas hay activas, de que tipo y cuando se publicaron?",
+      "unidad": "numero de ofertas con fecha de publicacion y URL propia",
+      "vacio": "sin ofertas verificables en la ventana"
+    },
+    {
+      "id": "perfil",
+      "nombre": "Perfil demandado",
+      "pregunta": "Que puesto se pide mas veces y con que requisitos de formacion?",
+      "unidad": "denominacion + numero de ofertas que la piden",
+      "vacio": "ninguna oferta de la ventana nombra este perfil"
+    },
+    {
+      "id": "stack",
+      "nombre": "Stack",
+      "pregunta": "Que tecnologia aparece en los requisitos y cuantas veces?",
+      "unidad": "tecnologia + numero de ofertas que la nombran",
+      "vacio": "las ofertas no declaran tecnologia"
+    },
+    {
+      "id": "salario",
+      "nombre": "Salario",
+      "pregunta": "Cuanto se ofrece, con que antiguedad del dato y sobre cuantas ofertas?",
+      "unidad": "bruto anual en EUR + rango + fecha de la oferta + n",
+      "vacio": "las ofertas no publican salario",
+      "aviso": "El n no es opcional. Un rango sin n es una cifra suelta con formato de rango."
+    },
+    {
+      "id": "experiencia",
+      "nombre": "Experiencia",
+      "pregunta": "Cuanta experiencia se exige?",
+      "unidad": "anos + numero de ofertas que los pide",
+      "vacio": "las ofertas no declaran experiencia"
+    },
+    {
+      "id": "modalidad",
+      "nombre": "Modalidad",
+      "pregunta": "Presencial, hibrido o remoto?",
+      "unidad": "modalidad + porcentaje sobre las ofertas de la ventana",
+      "vacio": "las ofertas no declaran modalidad"
+    }
+  ],
+  "familias": [
+    {
+      "id": "dam",
+      "nombre": "DAM",
+      "nombre_largo": "Desarrollo de Aplicaciones Multiplataforma",
+      "descripcion": "Perfiles de desarrollo y de aplicacion sobre multiplataforma, con foco en el producto entregado y el stack cliente.",
+      "competencias_clave": [
+        "lenguaje tipado o scripting de aplicacion",
+        "movil multiplataforma",
+        "web frontend",
+        "backend y API",
+        "control de versiones",
+        "integracion continua"
+      ],
+      "origen_competencias": "propuesta de entrada, no evidencia. Ajustar con el docente antes de usarla como criterio.",
+      "consultas_galicia": [
+        "empleo DAM desarrollador aplicaciones Galicia vacante",
+        "oferta empleo desarrollador web movil A Coruña Vigo",
+        "salario desarrollador multiplataforma Galicia"
+      ],
+      "consultas_espana": [
+        "ofertas empleo desarrollador DAM España",
+        "salario desarrollador de aplicaciones España 2026",
+        "perfil más demandado desarrollo web España"
+      ],
+      "consultas_global": [
+        "developer survey stack growth 2026",
+        "job market developer skills report 2026"
+      ],
+      "sesgo_conocido": "Los portales repiten ofertas del mismo grupo empresarial con nombres distintos. Una empresa con diez paginas de empleo no son diez empresas: se cuenta una y se dice.",
+      "riesgo_galicia": "medio. El volumen de ofertas tecnologicas en Galicia es pequeno: un numero pequeno de ofertas no da un rango salarial defendible. Ver umbrales.salario."
+    },
+    {
+      "id": "asir",
+      "nombre": "ASIR",
+      "nombre_largo": "Administracion de Sistemas Informaticos en Red",
+      "descripcion": "Perfiles de administracion de sistemas, redes, Helpdesk y seguridad, con foco en el servicio y la disponibilidad.",
+      "competencias_clave": [
+        "sistemas operativos de servidor",
+        "redes y segmentacion",
+        "virtualizacion y contenedores",
+        "backup y recuperacion",
+        "monitorizacion y registro",
+        "seguridad y gestion de vulnerabilidades"
+      ],
+      "origen_competencias": "propuesta de entrada, no evidencia. Ajustar con el docente antes de usarla como criterio.",
+      "consultas_galicia": [
+        "empleo ASIR administrador de sistemas Galicia vacante",
+        "oferta empleo informatica redes A Coruña Vigo",
+        "salario administrador de sistemas Galicia"
+      ],
+      "consultas_espana": [
+        "ofertas empleo administrador de sistemas España",
+        "salario-helpdesk técnico IT España 2026",
+        "demanda de ciberseguridad España empleo"
+      ],
+      "consultas_global": [
+        "cybersecurity workforce gap report 2026",
+        "cloud skills demand jobs report 2026"
+      ],
+      "sesgo_conocido": "El titulo de la oferta no siempre coincide con el trabajo: `soporte`, `técnico de sistemas` y `administrador de redes` son el mismo perfil con tres nombres. Se agrupa por tareas, no por el titulo que pone la empresa.",
+      "riesgo_galicia": "medio. Mismo limite que DAM: con menos de 8 ofertas el recuento es un recuento, no una tendencia."
+    }
+  ],
+  "horizonte": {
+    "id": "2-3-anos",
+    "ventana": "2027..2029",
+    "regla": "Todo lo que se proyecta va en su seccion propia y siempre marcado como proyeccion, con la fuente que la sostiene. Una senal de horizonte no rellena una celda de demanda actual, ni al reves.",
+    "tipos_de_senal": [
+      "encuesta de desarrollo (Octoverse, Stack Overflow): mide uso, no contratacion",
+      "informe de consultora u organismo (Gartner, WEF): proyecta, con metodologia propia",
+      "ponencia o entrevista: una persona, no un mercado"
+    ]
+  },
+  "umbrales": {
+    "quick": {
+      "ofertas": 8,
+      "fuentes": 4,
+      "descripcion": "Modo de aula: una hora por dia. Con 8 ofertas se puede contar y comparar; no se puede afirmar tendencia."
+    },
+    "full": {
+      "ofertas": 25,
+      "fuentes": 8,
+      "descripcion": "Solo si hay tiempo de leer 25 ofertas y comprobar que ninguna es la misma oferta duplicada."
+    },
+    "salario": {
+      "n_minimo_para_publicar_rango": 5,
+      "n_minimo_para_publicar_media": 20,
+      "regla": "Con menos de 5 ofertas con salario se escribe el rango observado y `n`, y se declara que la muestra no da una media. Con 5 o mas se puede dar el rango con n. La media exige 20 ofertas comparables (mismo ano, misma region, mismo tipo) y su metodologia al lado.",
+      "prohibido": [
+        "salario medio sin n",
+        "rango salarial sin n",
+        "media anualizada de un salario mensual sin decirlo",
+        "bruto presentado como neto"
+      ]
+    }
+  },
+  "csv": {
+    "nota": "Mapa de cabeceras CSV a campos de evidencia. Los nombres se comparan en minusculas y sin acentos, para que la exportacion de cualquier portal encaje. Si tu portal usa otra cabecera, anadela aqui y no en el script.",
+    "columnas": {
+      "medio": [
+        "medio",
+        "portal",
+        "fuente",
+        "origen",
+        "site",
+        "canal"
+      ],
+      "url": [
+        "url",
+        "url_oferta",
+        "enlace",
+        "link",
+        "oferta_url"
+      ],
+      "empresa": [
+        "empresa",
+        "razon_social",
+        "razon social",
+        "companias",
+        "compañias",
+        "empresa_ofertante"
+      ],
+      "denominacion": [
+        "puesto",
+        "denominacion",
+        "denominacion_oferta",
+        "titulo",
+        "titulo_oferta",
+        "cargo",
+        "puesto_de_trabajo",
+        "ocupacion"
+      ],
+      "familia": [
+        "familia",
+        "familia_laboral",
+        "modulo",
+        "perfil",
+        "area",
+        "familia_formativa"
+      ],
+      "salario_min": [
+        "salario_min",
+        "salario_minimo",
+        "salario_min_eur",
+        "salario_desde",
+        "retribucion_min",
+        "remuneracion_min",
+        "minimo"
+      ],
+      "salario_max": [
+        "salario_max",
+        "salario_maximo",
+        "salario_max_eur",
+        "salario_hasta",
+        "retribucion_max",
+        "remuneracion_max",
+        "maximo"
+      ],
+      "salario_texto": [
+        "salario",
+        "salario_eur",
+        "retribucion",
+        "remuneracion",
+        "sueldo",
+        "salario_anual",
+        "vacante_salario"
+      ],
+      "experiencia": [
+        "experiencia",
+        "anos_experiencia",
+        "experiencia_minima",
+        "anos",
+        "years_experience"
+      ],
+      "modalidad": [
+        "modalidad",
+        "tipo_trabajo",
+        "modo_trabajo",
+        "teletrabajo",
+        "jornada"
+      ],
+      "ubicacion": [
+        "ubicacion",
+        "provincia",
+        "localidad",
+        "ciudad",
+        "pais",
+        "location"
+      ],
+      "fecha": [
+        "fecha",
+        "fecha_publicacion",
+        "fecha de publicacion",
+        "publicacion",
+        "fecha_alta",
+        "fecha de alta",
+        "fecha_oferta",
+        "posted",
+        "date_posted",
+        "fecha_creacion",
+        "fecha de creacion"
+      ],
+      "stack": [
+        "stack",
+        "competencias",
+        "tecnologias",
+        "herramientas",
+        "skills",
+        "requisitos",
+        "conocimientos",
+        "lenguajes",
+        "tecnologia"
+      ],
+      "jornada": [
+        "jornada",
+        "tipo_contrato",
+        "contrato",
+        "dedicacion"
+      ],
+      "descripcion": [
+        "descripcion",
+        "descripcion_oferta",
+        "detalle",
+        "texto",
+        "body",
+        "descripcion_del_puesto"
+      ]
+    },
+    "campos_obligatorios": [
+      "denominacion",
+      "fecha"
+    ],
+    "campos_de_conteo": [
+      "familia",
+      "salario_min",
+      "salario_max",
+      "experiencia",
+      "modalidad",
+      "stack"
+    ],
+    "aviso": "Una fila sin `fecha` no cuenta como vacante actual: se conserva como evidencia y se marca `sin_fecha`, pero no suma al recuento de la ventana."
+  },
+  "fuentes": {
+    "aviso": "Estado de la verificacion: 12 de 16 fuentes verificadas el 2026-09-28 (ver el bloque `verificacion`, con la URL, el metodo y la fecha en cada fuente). Las 4 que siguen con verificado=false NO pueden usarse como evidencia ni citarse: dos por bloqueo a robots (Gartner, World Economic Forum), una porque la cadena TLS no valida desde este entorno (OSIMGA) y una por no ser una fuente unica sino una categoria. El veto de AGENTS.md sigue igual: un nodo solo pasa a verificado:true cuando consta URL, fecha de verificacion y que se ha comprobado que sigue existiendo y operando. Este fichero dice que hay que buscar estas fuentes; no dice que existan.",
+    "portales_empleo": [
+      {
+        "nombre": "Emprego Galicia (Consellería de Emprego, Comercio e Emigración)",
+        "tipo": "portal de empleo",
+        "url": "https://emprego.xunta.gal/es",
+        "peso": "D",
+        "verificado": true,
+        "nota": "Fuente de referencia del ambito Galicia. Publica salario orientativo en muchas fichas: es orientativo, no la cifra que pacta la empresa.",
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 y <title> 'Demandantes | Emprego Galicia' el 2026-09-28. La raiz sin /es devuelve 400: citar siempre la ruta de idioma.",
+        "correccion": "El enunciado lo llama 'Portal Emprego'. El nombre oficial es 'Emprego Galicia' y el dominio es emprego.xunta.gal, no emprego.gal (que no resuelve). Corregido el 2026-09-28 con la correccion anotada.",
+        "nombre_del_enunciado": "Portal Emprego de la Xunta de Galicia"
+      },
+      {
+        "nombre": "InfoJobs",
+        "tipo": "portal de empleo",
+        "url": "https://www.infojobs.net/",
+        "peso": "D",
+        "verificado": true,
+        "nota": "El salario de la oferta es el que declara la empresa. El numero de ofertas del portal no es el mercado: es el mercado en ese portal.",
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 el 2026-09-28"
+      },
+      {
+        "nombre": "Tecnoempleo",
+        "tipo": "portal de empleo",
+        "url": "https://www.tecnoempleo.com/",
+        "peso": "D",
+        "verificado": true,
+        "nota": "Perfil tecnico. Util para leer requisitos, no para extrapolar volumen.",
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 el 2026-09-28"
+      },
+      {
+        "nombre": "LinkedIn Jobs",
+        "tipo": "portal de empleo",
+        "url": "https://www.linkedin.com/jobs/",
+        "peso": "D",
+        "verificado": true,
+        "nota": "Requiere sesion y su texto cambia con el pais de la IP. La cifra cambia segun donde se mire: eso hay que decirlo en el informe.",
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 el 2026-09-28"
+      }
+    ],
+    "organismos": [
+      {
+        "nombre": "Instituto Galego de Estatistica (IGE)",
+        "tipo": "organismo",
+        "url": "https://www.ige.gal/",
+        "peso": "A",
+        "verificado": true,
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 y <title> 'IGE (Instituto Galego de Estatistica)' el 2026-09-28.",
+        "nota": "Anadido el 2026-09-28 al verificar OSIMGA: es de donde salen los datos gallegos de empleo, y con desagregacion propia. No esta en el enunciado, pero sin el la region Galicia no tiene estadistica propia. Misma limitacion que el INE: no llega a DAM/ASIR.",
+        "anadido_el": "2026-09-28",
+        "motivo_alta": "Verificado con HTTP 200 durante la verificacion de OSIMGA, que elabora sus series en convenio con el IGE."
+      },
+      {
+        "nombre": "OSIMGA (Observatorio da Sociedade da Información e da Modernización de Galicia)",
+        "nombre_por_verificar": true,
+        "tipo": "observatorio",
+        "url": "https://www.osimga.gal/es",
+        "peso": "A",
+        "verificado": false,
+        "nota": "Nombre tal como lo escribe el enunciado de la practica, y por confirmar: aqui no se corrige de memoria. Antes de citarlo hay que abrir la URL y comprobar que el informe existe y a que ano se refiere.",
+        "verificado_el": null,
+        "metodo_verificacion": "El sitio responde y el buscador lo indexa, pero la cadena TLS no valida desde este entorno (CERTIFICATE_VERIFY_FAILED el 2026-09-28). Abrirlo saltando la validacion no es verificarlo: se deja sin verificar.",
+        "correccion": "El enunciado lo llama 'Observatorio da Sociedade da Informacion de Galicia'. El nombre oficial incluye 'e da Modernizacion'. Corregido el 2026-09-28.",
+        "nombre_del_enunciado": "OSIMGA (Observatorio da Sociedade da Informacion de Galicia)",
+        "motivo_no_verificacion": "La cadena TLS no valida desde este entorno. 12 de las otras 13 fuentes verificadas si validan, asi que no es un problema general del entorno sino de este dominio. Comprobar desde un navegador antes de usarla como evidencia.",
+        "verificar_desde": "navegador, o con un almacen de CA actualizado"
+      },
+      {
+        "nombre": "Instituto Nacional de Estadistica (INE)",
+        "tipo": "organismo oficial",
+        "url": "https://www.ine.es/",
+        "peso": "A",
+        "verificado": true,
+        "nota": "Series de empleo y de salarios. Sus taxonomias no coinciden con las familias DAM/ASIR: la traduccion va explicada en la celda.",
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 el 2026-09-28"
+      },
+      {
+        "nombre": "SEPE y Servizo Público de Emprego de Galicia",
+        "tipo": "organismo oficial",
+        "url": "https://www.sepe.es/",
+        "peso": "A",
+        "verificado": true,
+        "nota": "Util para el agregado de demandantes de empleo por actividad economica, no para el salario de un puesto concreto.",
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 el 2026-09-28 para el SEPE. El servicio autonomico esta en conselleriaemprego.xunta.gal, tambien 200 el 2026-09-28.",
+        "urls_alternativas": [
+          "https://conselleriaemprego.xunta.gal/es/fomento-emprego/servizo-publico-emprego"
+        ],
+        "correccion": "El nombre del enunciado no existia como tal; se ha separado en los dos organismos. Corregido el 2026-09-28.",
+        "nombre_del_enunciado": "Servicio publico de empleo estatal y servicio autonomico"
+      }
+    ],
+    "consultoras_y_organismos": [
+      {
+        "nombre": "Gartner, Strategic Technology Trends",
+        "tipo": "consultora",
+        "url": "https://www.gartner.com/en/articles/strategic-technology-trends",
+        "peso": "B",
+        "verificado": false,
+        "nota": "Proyeccion con metodologia proprietary: hay que citar el ano del informe y decir que es proyeccion, no medida.",
+        "verificado_el": null,
+        "motivo_no_verificacion": "HTTP 403 a la peticion automatica el 2026-09-28. Es bloqueo a robots: no permite afirmar que la pagina exista ni que no. Verificar con navegador."
+      },
+      {
+        "nombre": "World Economic Forum, Future of Jobs Report",
+        "tipo": "organismo",
+        "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/",
+        "peso": "B",
+        "verificado": false,
+        "nota": "Encuesta a empleadores, con sesgo de respondientes. El dato es 'lo que esperan los empleadores', no 'lo que contrataron'.",
+        "verificado_el": null,
+        "motivo_no_verificacion": "HTTP 403 a la peticion automatica el 2026-09-28. Mismo caso que Gartner: bloqueo, no ausencia. Verificar con navegador."
+      }
+    ],
+    "encuestas_de_desarrollo": [
+      {
+        "nombre": "GitHub Octoverse",
+        "tipo": "encuesta de desarrollo",
+        "url": "https://octoverse.github.com/",
+        "peso": "B",
+        "verificado": true,
+        "nota": "Mide uso de lenguaje en GitHub, no contratacion. La proyeccion 'va a pedir mas X' sale de multiplicar uso por trafico, y hay que decirlo.",
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 y <title> 'Octoverse 2025: The state of open source' el 2026-09-28."
+      },
+      {
+        "nombre": "Stack Overflow Developer Survey",
+        "tipo": "encuesta de desarrollo",
+        "url": "https://survey.stackoverflow.co/2025/",
+        "peso": "B",
+        "verificado": true,
+        "nota": "Sus respondientes son los que respondieron: el sesgo esta documentado por ellos mismos. Es la fuente mas citable y la mas facil de sobreinterpretar.",
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 el 2026-09-28. Comprobar que no haya salido la edicion siguiente antes de citar."
+      }
+    ],
+    "video": [
+      {
+        "nombre": "Google I/O",
+        "tipo": "video",
+        "url": "https://io.google/2025/",
+        "peso": "D",
+        "verificado": true,
+        "nota": "Anuncios de producto de quien lo vende. Util para saber que se anuncia, nunca como dato de adopcion en el empleo.",
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 el 2026-09-28"
+      },
+      {
+        "nombre": "AWS re:Invent",
+        "tipo": "video",
+        "url": "https://aws.amazon.com/reinvent/",
+        "peso": "D",
+        "verificado": true,
+        "nota": "Charlas tecnicas y de arquitectura. El dato defendible es el de la charla, no el de la empresa que la publica.",
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 el 2026-09-28"
+      },
+      {
+        "nombre": "Devoxx",
+        "tipo": "video",
+        "url": "https://devoxx.com/",
+        "peso": "C",
+        "verificado": true,
+        "nota": "Comunidad, con ponentes de la practica real. Es la fuente mas cercana al trabajo diario, y la que mas se confunde con opinion.",
+        "verificado_el": "2026-09-28",
+        "metodo_verificacion": "HTTP 200 el 2026-09-28"
+      },
+      {
+        "nombre": "Charlas de expertos en canales oficiales",
+        "tipo": "video",
+        "url": null,
+        "peso": "D",
+        "verificado": false,
+        "nota": "Una persona opinando es una fuente D. Se cita como 'dice X', no como 'el sector usa X'.",
+        "verificado_el": null,
+        "motivo_no_verificacion": "No es una fuente unica: es una categoria. No hay una URL que verificar, y por lo tanto no puede tener fecha de verificacion. Cada charla se cita con la suya."
+      }
+    ]
+  },
+  "contratos": {
+    "sintaxis_csv": "Valores '30.000-45.000 EUR/ano' o '30000 EUR anual' o 'sin salario'.",
+    "periodicidad": "El informe solo admite 'ano' o 'mes'. Un mes se anualiza a 12 solo si la celda lo dice: '28.000 EUR/mes, anualizado x12 (n=3)'.",
+    "bruto": "Todo salario se presume bruto anual hasta que la oferta diga otra cosa. Si dice neto, la celda lo dice.",
+    "fecha": "La fecha que acompaña a un salario es la fecha de publicacion de la oferta, no la de captura. Si la oferta no la trae: `sin_fecha` y el salario no cuenta como actual."
+  },
+  "consultas_de_descubrimiento": [
+    "las que trae cada familia, por region",
+    "nombre oficial de la fuente + ano, para encontrar el informe y no una nota de prensa sobre el informe",
+    "nombre del informe + pdf, para la via de PDF y no la de nota de prensa"
+  ],
+  "reglas_transversales": [
+    "Una oferta sin fecha de publicacion no es vacante actual: se conserva y se marca sin_fecha.",
+    "El salario se cita con la unidad, la periodicidad, la fecha de la oferta y n. Sin n no es un rango.",
+    "La brecha de habilidades compara la misma competencia en la misma familia y en el mismo horizonte. Con un solo lado no hay brecha: hay benchmark.",
+    "Una senal de horizonte (2-3 anos) no rellena una celda de demanda actual, y una oferta de hoy no respalda una proyeccion.",
+    "El recuento de ofertas se declara siempre con su ambito: 'en LinkedIn Jobs, vista desde Galicia, 12 ofertas'. El numero sin ambito no es un dato."
+  ],
+  "verificacion": {
+    "fecha": "2026-09-28",
+    "metodo": "Peticion HTTP con la validacion de certificado activada (no se salta nunca), con User-Agent de navegador y leyendo el <title> de la respuesta. Sin exito no se marca verificado: un 403 a robots es bloqueo, y una cadena TLS que no valida tambien, y ninguno de los dos es ausencia.",
+    "resultado": {
+      "fuentes": 16,
+      "verificadas": 12,
+      "bloqueadas_por_robots": 2,
+      "cadena_tls_no_valida": 1,
+      "sin_url_verificable": 1
+    },
+    "aviso": "Las fuentes del enunciado se inventariaron el 2026-09-28. Las que siguen con verificado=false NO pueden usarse como evidencia ni citarse. Verificar es abrir la URL, mirar la fecha y comprobar que la fuente sigue viva; no es escribir la URL aqui."
+  }
+}

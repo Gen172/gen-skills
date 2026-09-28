@@ -1,6 +1,6 @@
 ---
 name: analizar
-description: Fase 2 del pipeline. Toma la evidencia que produjo la skill `recolectar` y la convierte en un informe de sector tecnológico con tabla por vertical, fuente citada celda a celda y vacíos declarados. Úsala SOLO cuando ya existe evidencia.json y resumen.md. NO busques, NO descargues y NO completes huecos con lo que sepas: eso es la skill `recolectar`.
+description: Fase 2 del pipeline. Toma la evidencia que produjo la skill `recolectar` y la convierte en un informe de sector tecnológico o de mercado laboral (DAM/ASIR) con tabla por vertical o familia, fuente citada celda a celda y vacíos declarados. Úsala SOLO cuando ya existe evidencia.json y resumen.md. NO busques, NO descargues y NO completes huecos con lo que sepas: eso es la skill `recolectar`.
 license: MIT
 metadata:
   fase: "2 de 2"
@@ -12,7 +12,7 @@ metadata:
 # analizar — juicio, no coleccion
 
 Tu entrada es evidencia ya fechada, deduplicada y marcada. Tu salida es un
-informe donde **cada dato se puede audiciar sin fiarse de ti**.
+informe donde **cada dato se puede auditar sin fiarse de ti**.
 
 ## Frontera dura
 
@@ -26,6 +26,17 @@ informe donde **cada dato se puede audiciar sin fiarse de ti**.
 
 Si te falta un dato, no lo busques: se queda vacío y se declara. Ese es el
 contrato con `recolectar` y es lo que hace el informe auditable.
+
+## Elige el dominio antes de la primera frase
+
+| Dominio | Se decide por | Plantilla | Config |
+|---|---|---|---|
+| `sector` (por defecto) | el `resumen.md` habla de verticales | `INFORME.md` | `config/verticales.json` |
+| `laboral` | el `resumen.md` habla de ofertas, familias o salario | `INFORME-LABORAL.md` | `config/mercado-laboral.json` |
+
+El `dominio` va también en el frontmatter del informe: el evaluador lo lee de
+ahí, y si el frontmatter no lo dice, comprueba `laboral:` y `familias:`. No lo
+adivines por el título del fichero.
 
 ## Antes de escribir nada
 
@@ -117,10 +128,64 @@ Sección por sección:
 6. **Registro de evidencia** — tabla `[E01]...` con URL, medio, fecha,
    idioma y peso (A-E de `CRITERIOS.md`).
 
+## En el dominio `laboral`
+
+La plantilla es `INFORME-LABORAL.md` y las secciones cambian de nombre y de
+contenido. Lo que no cambia es el contrato: cada celda con dato lleva su
+`[Enn]`, y cada hueco se declara en la tabla y en el resumen.
+
+1. **Resumen ejecutivo** — incluye cuántos contratos con salario hay y si
+   alcanzan para publicar media.
+2. **Demanda actual por familia** — una subsección por familia pedida
+   (`dam`, `asir`). Una familia sin ofertas es una subsección con
+   `<sin evidencia>`, no una subsección que se salta.
+3. **Señales de horizonte 2-3 años** — la tabla que separa "se pide hoy" de
+   "se anuncia para dentro". Cada fila dice de qué lado sale la señal, porque
+   lo único interesante de esta tabla es que los dos lados **no** son la misma
+   fuente.
+4. **Brecha de habilidades** — una subsección por familia, con las columnas
+   `Se pide hoy` / `Se anuncia` / `Veredicto` / `Qué haría falta en el plan`.
+5. **Riesgos y límites** — tamaño de muestra,Ventana, y huecos por familia.
+6. **Registro de evidencia** — con la columna `URL o clave local`: aquí una
+   fila puede citar `archivo:ofertas.csv#3`.
+
+### El salario tiene reglas propias
+
+`config/mercado-laboral.json` las fija y `evaluar.py` las mide con
+`salarios_verificables`. En corto:
+
+- Un rango sin `n=` no es un dato: es una impresión. Pon `n=`, di cuántas
+  ofertas y de qué fecha.
+- Media solo con `salario_media_n` ofertas comparables. Si no llegas, di que no
+  hay media.
+- Brutos o netos, pero no los mezcles en la misma cifra. Si la mitad de la
+  muestra no dice, pon "bruto declarado" y explica.
+- Una celda de salario tiene que citar **al menos una oferta que publique
+  salario**. Citar un panel de ofertas donde el salario no aparece es el fallo
+  que más se cuela aquí, porque el enlace existe.
+- Si las ofertas no publican salario, se dice en la celda (`<las ofertas no
+  publican salario>`) y en el resumen. No se estimate.
+- Una cifra de una charla o de un informe de barras no es un salario. Es una
+  señal de horizonte, y va en la sección 3.
+
+### La brecha se declara o no es brecha
+
+La tabla 4 no necesita que las dos columnas tengan datos para ser válida.
+Necesita que digas cuál de los dos lados falta y qué harías al respecto. El
+evaluador marca `brecha_declarada` a 0 si una familia pedida no tiene
+subsección, o si la subsección no dice nada de lo que se pide hoy.
+
 ## Antes de darlo por terminado
 
 ```bash
 python3 scripts/evaluar.py --informe informes/<fichero>.md --evidencia datos/<corrida>/evidencia.json
+```
+
+En el dominio laboral, el mismo comando con las dos métricas del dominio, y
+antes la suite de oficios:
+
+```bash
+python3 scripts/test_laboral.py   # verifica config, ingesta local y métricas
 ```
 
 Si el script dice que hay citas sin respaldo o celdas sin fuente, **arregla el

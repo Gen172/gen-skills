@@ -11,7 +11,7 @@ que crees, se cambia el script y se vuelve a correr todo el golden set.
 
 | Metrica | Que mide | Umbral para aprobar |
 |---|---|---|
-| `citas_resolubles` | % de claves citadas cuya URL existe en `evidencia.json` | **1.00** |
+| `citas_resolubles` | % de claves citadas cuya URL (o clave `archivo:`) existe en `evidencia.json` | **1.00** |
 | `fechas_correctas` | % de entradas del registro cuya fecha coincide con la evidencia | **1.00** |
 | `celdas_sin_fuente` | % de celdas con dato y sin clave `[Enn]` | **0.00** |
 | `estructura_completa` | Secciones del informe y campos del frontmatter | **1.00** |
@@ -21,6 +21,27 @@ que crees, se cambia el script y se vuelve a correr todo el golden set.
 Las tres primeras son binarias a proposito. Un informe con `citas_resolubles`
 de 0.95 no es "casi bueno": tiene una cita inventada, y una cita inventada
 invalida el resto porque demuestra que el modelo rellena cuando no sabe.
+
+### Metricas que solo existen en el dominio `laboral`
+
+Se calculan cuando el frontmatter del informe lleva `dominio: laboral`, con el
+mismo script y los mismos umbrales. Si salen a `null` en un informe laboral, es
+que el evaluador no ha detectado el dominio: eso ya es un fallo.
+
+| Metrica | Que mide | Umbral para aprobar |
+|---|---|---|
+| `salarios_verificables` | % de celdas de la fila `Salario` que se pueden auditar: llevan `EUR`, un año o fecha, `n=` con la muestra, y **al menos una oferta citada que publique un salario** | **1.00** |
+| `brecha_declarada` | % de familias pedidas que tienen subseccion en la tabla de brecha **y** dicen que se pide hoy (o que no hay datos) | **1.00** |
+
+`salarios_verificables` no mide si el salario es *correcto*: mide si se puede
+auditar. La comprobacion de que exista una oferta citada con salario es la que
+mata el fallo de G15, donde la cita resuelve y la cifra no esta. Los motivos que
+el script imprime son `sin n= (muestra)`, `sin EUR`, `sin fecha o ano`,
+`ninguna de las fuentes citadas publica un salario` y `sin clave de fuente`.
+
+`brecha_declarada` mide la simetria, no la calidad del juicio. Una familia sin
+ofertas tiene su subseccion con `<sin evidencia>` y la cumple; una familia que
+no aparece, no.
 
 ## Parte 2: valoracion humana
 
@@ -47,7 +68,26 @@ que mas pesa.
 4. Se calcula la media de las dos. Si discrepan en mas de 1 punto en cualquier
    criterio, se discute en la revision: ahi esta casi siempre el hallazgo.
 5. `python3 scripts/evaluar.py ... --caso <id>` para los casos del golden set
-   aplicables a la vertical del informe.
+   aplicables a la corrida. El script marca con `*` los que encajan, y avisa si
+   el caso y el informe no son del mismo ambito.
+
+## Sobre la parte 2 en el dominio `laboral`
+
+Los siete criterios de arriba se puntuan igual, pero dos cambian de sentido:
+
+- **Utilidad para la decision** (5): en un informe de empleo, un 3 no es
+  "dice que se puede hacer" sino "dice que se puede ajustar el plan, y con que
+  margen de error". Si el plan solo puede cambiar de forma cualitativa, esa es
+  la conclusion util y hay que escribirla.
+- **Calidad de las cifras** (3): una cifra de salario sin `n=` puntua 1, no 2.
+  Y un rango con n=2 no es un dato de mercado aunque las dos cifras sean
+  ciertas: es una muestra.
+
+Un criterio extra que solo se puntua en `laboral`, de 0 a 2:
+
+| # | Criterio | 0 | 1 | 2 |
+|---|---|---|---|---|
+| 8 | Separacion oferta / senal de horizonte | Las dos se mezclan en la misma tabla | La tabla 3 existe pero alguna fila mezcla oferta con proyeccion | La tabla 3 dice de que lado sale cada fila y la tabla 4 no usa cifras de charla como si fueran salario |
 
 ## Iterar el prompt
 

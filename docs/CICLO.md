@@ -42,11 +42,11 @@ Skill = carpeta con `SKILL.md`. Nada más. Sin codigo, sin runtime.
 ```
 
 **Carga progresiva.** El agente lee solo el frontmatter de las N skills
-disponibles (~50 tokens cada una). Solo abre el cuerpo de la quedescription
-dice que aplica. Por eso:
+disponibles (~50 tokens cada una). Solo abre el cuerpo de la que su
+`description` dice que aplica. Por eso:
 
 - `description` = cuando usarla. Es lo mas importante del fichero. Va primero,
- Third persona, con la condicion de NO usarla.
+  en tercera persona, con la condicion de NO usarla.
 - cuerpo = como. Se lee solo si aplica.
 - ficheros hermanos = detalle. Se leen cuando el cuerpo lo dice ("lee
   `CRITERIOS.md` antes de seguir"). Nadie los carga por accidente.
@@ -137,6 +137,19 @@ Corrida: <region> / <vertical(es)> / <modo>
 Fuentes unicas: N (con fecha: N, con error: N, desde cache: N)
 Nodos de semilla verificados en esta corrida: <nombres> | ninguno
 Verticales sin evidencia regional: <ids> | ninguna
+Senaladas: <etiquetas con conteo>
+Limitaciones: <lo que no se pudo cubrir y por que>
+```
+
+En el dominio `laboral` el resumen usa otro formato, porque los huecos no son
+por vertical sino por familia, y el umbral de utilidad es por oferta:
+
+```
+Corrida: <region> / <familia(s)> / <modo>
+Ofertas unicas: N (con fecha: N, con error: N, desde cache: N)
+Ofertas con salario publicado: N (suficientes para media: si/no)
+Fuentes locales: <archivo:nombre (#filas)> | ninguna
+Familias sin oferta verificable: <ids> | ninguna
 Senaladas: <etiquetas con conteo>
 Limitaciones: <lo que no se pudo cubrir y por que>
 ```
@@ -369,6 +382,33 @@ Ficheros que no se tocan sin motivo: `.gitignore` · `config/verticales.json`
 Veto vigente: un nodo solo sirve como evidencia si consta su URL, su fecha y
 que sigue existiendo.
 
+### Dominio laboral (2026-09-28, ADR-006 y ADR-007)
+
+| | |
+|---|---|
+| config | `config/mercado-laboral.json`: 2 familias, 6 campos, 3 regiones, mapa de CSV, 4 tipos de fuente |
+| ingesta local | `--csv`, `--pdf`, `--transcript`, `--youtube`. Probadas offline las tres primeras |
+| plantilla | `.opencode/skills/analizar/INFORME-LABORAL.md`, con tabla de brecha por familia |
+| metricas | `salarios_verificables` y `brecha_declarada`, con umbral 1.00 y codigo de salida 1 |
+| golden | G13-G18 anadidos. Los G01-G12 intactos |
+| pruebas | `scripts/test_laboral.py`, 35 offline |
+| sin probar | `--youtube` con red, y una corrida laboral completa con fuentes reales |
+| entrega | `scripts/empaquetar.py` genera `kb-*.zip`, `agente-*.zip`, `docs-*.zip` con indice sha256 |
+
+Fuentes verificadas el 2026-09-28 con peticion HTTP real y validacion de
+certificado activa: **12 de 16**. Las 4 que quedan sin verificar son Gartner y World
+Economic Forum (403 a robots), OSIMGA (cadena TLS que no valida desde este entorno)
+y "charlas de expertos en canales oficiales", que no es una fuente sino una categoria
+y por eso no tiene URL que verificar. Ninguna se marco como verificada saltandose
+la comprobacion. Se corrigieron
+tres nombres que no eran los oficiales, cada uno con su correccion anotada en el
+propio fichero, y se anadio el IGE (verificado) al detectar que era el origen de
+los datos de empleo de Galicia.
+
+Lo que **no** hay todavia: ninguna corrida laboral con ofertas reales. Los CSV de
+ofertas con fecha y salario son el trabajo del recolector el primer dia, y no se
+pueden hacer de memoria.
+
 ---
 
 ## Trampa conocida
@@ -382,3 +422,10 @@ Ruta de salida de fase 2 esta escrita de dos formas y **no coinciden**:
 
 Fijar una y corregir las otras tres, o el `evaluar.py` acaba apuntando a
 ficheros que no existen. Requiere ADR si cambia la plantilla (`INFORME.md`).
+
+Segunda trampa, ya abierta: el dominio laboral **no tiene la trampa de la
+region**, pero si la del **umbral**. El evaluador mide `celdas_sin_fuente` por
+fila de tabla, no por celda, asi que una columna de veredicto o de recomendacion
+en la tabla de brecha no hace bajar la metrica mientras la fila tenga una
+`[Enn]`. Es intencionado (el veredicto es juicio, no dato), y por eso la rubrica
+pide puntuarlo a mano en el criterio 8.

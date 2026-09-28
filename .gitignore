@@ -1,6 +1,9 @@
 # Evidencia generada: se regenera con scripts/fetch.py. No se versiona (ADR-004).
 datos/
 
+# Paquetes de entrega: se regeneran con scripts/empaquetar.py y llevan fecha.
+dist/
+
 # Cache de red
 .cache/
 

@@ -80,18 +80,36 @@ def revisar_fichero(p: Path) -> list[str]:
 
     # Tablas markdown: todas las filas de un bloque deben llevar el mismo
     # numero de pipes. Un pipe suelto rompe la tabla en silencio.
-    bloque: list[tuple[int, int]] = []
+    #
+    # Y ademas: la segunda fila del bloque tiene que ser la separadora. Sin
+    # ella el markdown no monta la tabla y todo el bloque se lee como un
+    # parrafo pegado. El conteo de pipes no lo pilla (la fila separadora lleva
+    # los mismos pipes que las demas), asi que hace falta mirar el contenido:
+    # es el unico sintoma que se ve al final, cuando ya se ha escrito todo.
+    bloque: list[tuple[int, int, str]] = []
     for i, linea in enumerate(lineas, 1):
         s = linea.strip()
         if s.startswith("|") and s.endswith("|"):
-            bloque.append((i, s.count("|")))
+            bloque.append((i, s.count("|"), s))
         else:
             if len(bloque) > 1:
-                moda = max({n for _, n in bloque}, key=lambda n: sum(1 for _, x in bloque if x == n))
-                for ln, n in bloque:
+                moda = max({n for _, n, _ in bloque}, key=lambda n: sum(1 for _, x, _ in bloque if x == n))
+                for ln, n, _ in bloque:
                     if n != moda:
                         problemas.append(
                             f"{ln}: fila de tabla con {n} pipes, el bloque usa {moda}"
+                        )
+                separadoras = [(ln, s) for ln, _, s in bloque if SEPARADOR.match(s)]
+                if not separadoras:
+                    problemas.append(
+                        f"{bloque[0][0]}: bloque de tabla sin fila separadora "
+                        f"(|---|---|); no se va a renderizar como tabla"
+                    )
+                for ln, _ in separadoras:
+                    if ln != bloque[1][0]:
+                        problemas.append(
+                            f"{ln}: fila separadora fuera de sitio; tiene que ir "
+                            f"justo debajo de la cabecera (linea {bloque[0][0]})"
                         )
             bloque = []
 

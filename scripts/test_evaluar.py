@@ -150,6 +150,20 @@ def main() -> int:
     finally:
         fuera.unlink(missing_ok=True)
 
+    # `--caso` sin `--golden` no imprimia nada: la rama del caso vivia dentro
+    # de `if args.golden`, asi que el comando se ejecutaba, moria en silencio
+    # y devolvia 0. Es el comando que aparece en la ayuda y en la practica
+    # ("usa --caso G01"), asi que el fallo es silencioso y jukoso: el auditor
+    # creeria que ha comprobado un caso cuando no ha comprobado nada.
+    p3 = subprocess.run(
+        [sys.executable, str(RAIZ / "scripts" / "evaluar.py"),
+         "--informe", str(inf), "--evidencia", str(ev), "--caso", "G01"],
+        capture_output=True, text=True, cwd=RAIZ,
+    )
+    check("comprueba un caso del golden sin pasar --golden",
+          "Caso G01" in p3.stdout and "no_debe_contener" in p3.stdout,
+          p3.stdout.strip()[-120:])
+
     print(f"\n{len(fallos)} fallos")
     return 1 if fallos else 0
 

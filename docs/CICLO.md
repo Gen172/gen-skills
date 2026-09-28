@@ -361,7 +361,7 @@ python3 scripts/evaluar.py ... --red            # comprueba URLs muertas
 # SIEMPRE antes de commitear
 python3 scripts/revisar_docs.py     # caracteres, JSON, frontmatter
 python3 scripts/test_pipeline.py    # 31 pruebas offline
-python3 scripts/test_evaluar.py     # 12 pruebas, con fallos plantados
+python3 scripts/test_evaluar.py     # 15 pruebas, con fallos plantados
 ```
 
 Ficheros que no se tocan sin motivo: `.gitignore` · `config/verticales.json`

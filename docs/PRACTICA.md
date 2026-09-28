@@ -27,7 +27,7 @@ Lo que se entrega esta escrito en `AGENTS.md` (reparto de trabajo), en
 ```bash
 python3 -c "import requests, bs4; print('ok')"   # o: pip install -r requirements.txt
 python3 scripts/test_pipeline.py                  # 31 pruebas offline
-python3 scripts/test_evaluar.py                   # 12 pruebas del evaluador
+python3 scripts/test_evaluar.py                   # 15 pruebas del evaluador
 python3 scripts/test_laboral.py                   # 35 pruebas del dominio laboral
 python3 scripts/revisar_docs.py                   # linter: debe dar 0 problemas
 ```

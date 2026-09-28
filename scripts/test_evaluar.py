@@ -126,6 +126,29 @@ def main() -> int:
           not d["secciones_faltantes"], d["secciones_faltantes"])
     check("devuelve codigo de salida 1 por las citas sin respaldo", p.returncode == 1,
           p.returncode)
+    check("el dominio sale en el JSON, y por defecto es sector",
+          m.get("dominio") == "sector", m.get("dominio"))
+    check("las metricas del dominio laboral salen a null en sector",
+          m.get("salarios_verificables") is None and m.get("brecha_declarada") is None,
+          f"{m.get('salarios_verificables')} {m.get('brecha_declarada')}")
+
+    # Un informe puede estar fuera del repo: una copia de trabajo, /tmp, el
+    # escritorio de quien lo esta revisando. Antes esto reventaba con
+    # ValueError en el `print` de la cabecera, que es donde se pega uno a
+    # mirar el resultado.
+    fuera = Path("/tmp") / "evaluar-fuera-del-repo.md"
+    fuera.write_text(inf.read_text(encoding="utf-8"), encoding="utf-8")
+    try:
+        p2 = subprocess.run(
+            [sys.executable, str(RAIZ / "scripts" / "evaluar.py"),
+             "--informe", str(fuera), "--evidencia", str(ev)],
+            capture_output=True, text=True, cwd=RAIZ,
+        )
+        check("no revienta con un informe fuera del repo",
+              p2.returncode == 1 and "Traceback" not in p2.stderr,
+              p2.stderr.strip()[-120:])
+    finally:
+        fuera.unlink(missing_ok=True)
 
     print(f"\n{len(fallos)} fallos")
     return 1 if fallos else 0

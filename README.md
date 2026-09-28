@@ -96,7 +96,7 @@ scripts/
   revisar_docs.py        linter de caracteres, JSON, frontmatter, tablas
   empaquetar.py          kb-*.zip, agente-*.zip, docs-*.zip con indice sha256
   test_pipeline.py       31 pruebas offline
-  test_evaluar.py        12 pruebas del evaluador, con fallos plantados
+  test_evaluar.py        15 pruebas del evaluador, con fallos plantados
   test_laboral.py        35 pruebas del dominio laboral, offline
 golden/
   casos.json             18 casos de fallo, con fecha de corte

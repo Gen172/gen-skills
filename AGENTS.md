@@ -44,7 +44,7 @@ python3 scripts/evaluar.py --informe informes/x.md --evidencia datos/c1/evidenci
 # Antes de commitear, siempre:
 python3 scripts/revisar_docs.py      # caracteres, JSON, frontmatter, tablas
 python3 scripts/test_pipeline.py     # 31 pruebas offline
-python3 scripts/test_evaluar.py      # 12 pruebas del evaluador
+python3 scripts/test_evaluar.py      # 15 pruebas del evaluador
 python3 scripts/test_laboral.py      # 35 pruebas del dominio laboral
 
 # Entregar (kb-*.zip, agente-*.zip, docs-*.zip, cada uno con indice sha256)

@@ -39,8 +39,11 @@ HASH = "#" * 2
 PEGADO = re.compile(
     r"[A-Za-zÁÉÍÓÚáéíóúÑñ]{2,}(?:" + HASH + r"+|@@+|\*\*\w)[A-Za-zÁÉÍÓÚáéíóúÑñ]{2,}"
 )
-# Parentesis o corchetes que se abren y no se cierran (texto cortado).
+# # Parentesis o corchetes que se abren y no se cierran (texto cortado).
 SIN_CERRAR = re.compile(r"[\(\[][^\)\]\n]{0,80}$")
+# La fila que separa la cabecera del cuerpo de una tabla markdown. Sin ella, en
+# el sitio donde se lee esto, el bloque entero sale como texto pegado.
+SEPARADOR = re.compile(r"^\|(?:\s*:?-+:?\s*\|)+$")
 
 
 def no_ascii_sospechoso(t: str) -> list[tuple[str, str]]:

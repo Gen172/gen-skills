@@ -87,31 +87,38 @@ def revisar_fichero(p: Path) -> list[str]:
     # los mismos pipes que las demas), asi que hace falta mirar el contenido:
     # es el unico sintoma que se ve al final, cuando ya se ha escrito todo.
     bloque: list[tuple[int, int, str]] = []
+
+    def revisar_bloque(bloque: list[tuple[int, int, str]]) -> None:
+        if len(bloque) < 2:
+            return
+        moda = max({n for _, n, _ in bloque}, key=lambda n: sum(1 for _, x, _ in bloque if x == n))
+        for ln, n, _ in bloque:
+            if n != moda:
+                problemas.append(f"{ln}: fila de tabla con {n} pipes, el bloque usa {moda}")
+        separadoras = [ln for ln, _, s in bloque if SEPARADOR.match(s)]
+        if not separadoras:
+            problemas.append(
+                f"{bloque[0][0]}: bloque de tabla sin fila separadora "
+                f"(|---|---|); no se va a renderizar como tabla"
+            )
+        for ln in separadoras:
+            if ln != bloque[1][0]:
+                problemas.append(
+                    f"{ln}: fila separadora fuera de sitio; tiene que ir "
+                    f"justo debajo de la cabecera (linea {bloque[0][0]})"
+                )
+
     for i, linea in enumerate(lineas, 1):
         s = linea.strip()
         if s.startswith("|") and s.endswith("|"):
             bloque.append((i, s.count("|"), s))
         else:
-            if len(bloque) > 1:
-                moda = max({n for _, n, _ in bloque}, key=lambda n: sum(1 for _, x, _ in bloque if x == n))
-                for ln, n, _ in bloque:
-                    if n != moda:
-                        problemas.append(
-                            f"{ln}: fila de tabla con {n} pipes, el bloque usa {moda}"
-                        )
-                separadoras = [(ln, s) for ln, _, s in bloque if SEPARADOR.match(s)]
-                if not separadoras:
-                    problemas.append(
-                        f"{bloque[0][0]}: bloque de tabla sin fila separadora "
-                        f"(|---|---|); no se va a renderizar como tabla"
-                    )
-                for ln, _ in separadoras:
-                    if ln != bloque[1][0]:
-                        problemas.append(
-                            f"{ln}: fila separadora fuera de sitio; tiene que ir "
-                            f"justo debajo de la cabecera (linea {bloque[0][0]})"
-                        )
+            # El bloque se vacia en cuanto aparece una linea que no es de
+            # tabla. Sin esto, una tabla al final del fichero no se revisa
+            # nunca: es justo donde la han colado.
+            revisar_bloque(bloque)
             bloque = []
+    revisar_bloque(bloque)
 
     if p.suffix == ".json":
         try:
